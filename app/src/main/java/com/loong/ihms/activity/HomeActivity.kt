@@ -1,4 +1,4 @@
-package com.loong.ihms
+package com.loong.ihms.activity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,7 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.loong.ihms.R
 import com.loong.ihms.databinding.ActivityHomeBinding
+import com.loong.ihms.fragment.CuratorFragment
+import com.loong.ihms.fragment.HomeFragment
+import com.loong.ihms.fragment.PlayingFragment
 
 class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityHomeBinding //data binding

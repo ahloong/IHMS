@@ -18,7 +18,11 @@ class IpLoginActivity : AppCompatActivity() {
     }
 
     fun goToLogin(view: View) {
-        val ipStr = binding.ipPortEditText.text.toString()
+        var ipStr = binding.ipPortEditText.text.toString()
+
+        if (!ipStr.contains("http")) {
+            ipStr = "http://$ipStr"
+        }
 
         val intent = Intent(this, LoginActivity::class.java)
         intent.putExtra("ip_login_params", ipStr)

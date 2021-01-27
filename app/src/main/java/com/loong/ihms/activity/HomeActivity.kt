@@ -13,6 +13,10 @@ import com.loong.ihms.databinding.ActivityHomeBinding
 import com.loong.ihms.fragment.CuratorFragment
 import com.loong.ihms.fragment.HomeFragment
 import com.loong.ihms.fragment.PlayingFragment
+import com.loong.ihms.model.Song
+import com.loong.ihms.network.ApiRepository
+import com.loong.ihms.network.ApiRepositoryFunction
+import com.loong.ihms.network.ApiResponseCallback
 
 class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityHomeBinding //data binding
@@ -27,6 +31,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding.toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
+
+        getSongList()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -58,5 +64,18 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(binding.homeContainer.id, fragment)
         transaction.commit()
+    }
+
+    private fun getSongList() {
+        ApiRepositoryFunction.getSongList(object: ApiResponseCallback<ArrayList<Song>>{
+            override fun onSuccess(responseData: ArrayList<Song>) {
+                val sss = ""
+            }
+
+            override fun onFailed() {
+
+            }
+
+        })
     }
 }

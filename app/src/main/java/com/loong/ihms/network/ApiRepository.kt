@@ -2,6 +2,7 @@ package com.loong.ihms.network
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.loong.ihms.model.Song
 import com.loong.ihms.model.UserProfile
 import com.loong.ihms.utils.ConstantDataUtil
 import com.loong.ihms.utils.LocalStorageUtil
@@ -93,6 +94,39 @@ object ApiRepositoryFunction {
                 callback.onFailed()
             }
         })
+    }
+
+    fun getSongList(
+        callback: ApiResponseCallback<ArrayList<Song>>
+    ) {
+        val auth = LocalStorageUtil.getInstance().readString(LocalStorageUtil.USER_API_AUTH)
+
+        val call = ApiRepository.getApiService().getSongList(
+            ConstantDataUtil.ACTION_GET_INDEXES,
+            auth,
+            ConstantDataUtil.TYPE_SONG
+        )
+
+        call.enqueue(object : Callback<ArrayList<Song>> {
+            override fun onResponse(call: Call<ArrayList<Song>>, response: Response<ArrayList<Song>>) {
+                if (response.code() == 200) {
+                    response.body()?.let {
+                        callback.onSuccess(it)
+                    }
+                } else {
+                    callback.onFailed()
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Song>>, t: Throwable) {
+                callback.onFailed()
+            }
+        })
+    }
+
+    fun playSomething() {
+        val auth = LocalStorageUtil.getInstance().readString(LocalStorageUtil.USER_API_AUTH)
+
     }
 }
 

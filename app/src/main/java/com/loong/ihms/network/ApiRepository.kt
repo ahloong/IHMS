@@ -24,6 +24,7 @@ object ApiRepository {
         retrofit = null
     }
 
+    //Retrofit, for compiling the URL before send out
     private fun getRetrofitInstance(): Retrofit {
         if (retrofit == null) {
             val baseUrl = LocalStorageUtil.getInstance().readString(LocalStorageUtil.MAIN_API_URL)

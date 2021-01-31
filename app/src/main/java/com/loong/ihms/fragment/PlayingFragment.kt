@@ -30,6 +30,12 @@ class PlayingFragment : Fragment(R.layout.fragment_playing) {
             mp = MediaPlayer.create(this@PlayingFragment.requireActivity(), Uri.parse("${baseUrl}/server/json.server.php?action=stream&auth=${auth}&id=23&type=song"))
             mp?.start()
         }
+
+        binding.stop.setOnClickListener() {
+            mp?.stop()
+            mp?.reset()
+            mp?.release()
+        }
     }
 
 }

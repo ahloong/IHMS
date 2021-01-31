@@ -10,13 +10,19 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.PlayingFragment">
+        tools:context=".fragment.PlayingFragment"
+        android:gravity="center">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PLAY"
             android:id="@+id/play" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STOP"
+            android:id="@+id/stop"/>
 
 
     </LinearLayout>

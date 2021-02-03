@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.loong.ihms.R
 import com.loong.ihms.databinding.ActivityHomeBinding
+import com.loong.ihms.fragment.AlbumFragment
 import com.loong.ihms.fragment.CuratorFragment
 import com.loong.ihms.fragment.HomeFragment
 import com.loong.ihms.fragment.PlayingFragment
@@ -53,6 +54,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.nav_album -> {
+                openFragment(AlbumFragment())
                 return true
             }
         }

@@ -10,6 +10,7 @@ import com.loong.ihms.databinding.ActivityLoginBinding
 import com.loong.ihms.model.UserProfile
 import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
+import com.loong.ihms.utils.ConstantDataUtil
 import com.loong.ihms.utils.UserRelatedUtil
 
 class LoginActivity : BaseActivity() {
@@ -19,7 +20,7 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-        val url = intent.getStringExtra("ip_login_params") ?: ""
+        val url = intent.getStringExtra(ConstantDataUtil.IP_LOGIN_PARAMS) ?: ""
         binding.ipTextView.text = "Connected To: $url"
         UserRelatedUtil.saveMainApiUrl(url)
     }

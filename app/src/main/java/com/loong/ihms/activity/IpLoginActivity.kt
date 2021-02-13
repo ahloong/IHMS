@@ -7,9 +7,9 @@ import androidx.databinding.DataBindingUtil
 import com.loong.ihms.R
 import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityIpLoginBinding
+import com.loong.ihms.utils.ConstantDataUtil
 
 class IpLoginActivity : BaseActivity() {
-    // Data binding
     private lateinit var binding: ActivityIpLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,13 +20,14 @@ class IpLoginActivity : BaseActivity() {
     fun goToLogin(view: View) {
         var ipStr = binding.ipPortEditText.text.toString()
 
-        if (!ipStr.contains("http")) {
-            ipStr = "http://$ipStr"
+        if (ipStr.isNotEmpty()) {
+            if (!ipStr.contains("http")) {
+                ipStr = "http://${ipStr}"
+            }
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra(ConstantDataUtil.IP_LOGIN_PARAMS, ipStr)
+            startActivity(intent)
         }
-
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.putExtra("ip_login_params", ipStr)
-
-        startActivity(intent)
     }
 }

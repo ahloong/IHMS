@@ -11,4 +11,7 @@ object ConstantDataUtil {
     // API Type
     const val TYPE_SONG = "song"
     const val TYPE_ALBUM = "album"
+
+    // Extra Params Name
+    const val IP_LOGIN_PARAMS = "ip_login_params"
 }

@@ -15,16 +15,28 @@
         android:theme="@style/Theme.IHMS"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
-        <activity android:name=".activity.SplashActivity">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.IpLoginActivity" />
-        <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity
+            android:name=".activity.IpLoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorPortrait" />
     </application>
 
 </manifest>

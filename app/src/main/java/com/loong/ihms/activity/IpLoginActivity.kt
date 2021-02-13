@@ -3,13 +3,13 @@ package com.loong.ihms.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.loong.ihms.R
+import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityIpLoginBinding
 
-class IpLoginActivity : AppCompatActivity() {
-    // data binding
+class IpLoginActivity : BaseActivity() {
+    // Data binding
     private lateinit var binding: ActivityIpLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +28,5 @@ class IpLoginActivity : AppCompatActivity() {
         intent.putExtra("ip_login_params", ipStr)
 
         startActivity(intent)
-        finish()
     }
 }

@@ -9,7 +9,7 @@ import com.loong.ihms.model.AlbumItem
 import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
 
-class AlbumFragment() : Fragment(R.layout.fragment_album){
+class AlbumFragment : Fragment(R.layout.fragment_album){
     private lateinit var binding: FragmentAlbumBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

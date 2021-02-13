@@ -1,6 +1,6 @@
 package com.loong.ihms.network
 
-import com.loong.ihms.model.AlbumsItem
+import com.loong.ihms.model.AlbumItem
 import com.loong.ihms.model.Song
 import com.loong.ihms.model.UserProfile
 import retrofit2.Call
@@ -23,10 +23,11 @@ interface ApiService {
         @Query("auth") auth: String,
         @Query("type") type: String,
     ): Call<ArrayList<Song>>
+
     @GET(".")
     fun getAlbumsList(
-            @Query("action") action: String,
-            @Query("auth") auth: String,
-            @Query("type") type: String,
-    ): Call<ArrayList<AlbumsItem>>
+        @Query("action") action: String,
+        @Query("auth") auth: String,
+        @Query("type") type: String,
+    ): Call<ArrayList<AlbumItem>>
 }

@@ -1,6 +1,10 @@
 package com.loong.ihms.utils
 
+import androidx.fragment.app.Fragment
+import com.loong.ihms.base.BaseActivity
 import java.security.MessageDigest
+
+// General functions
 
 object GeneralUtil {
     fun hashString(input: String, algorithm: String): String {
@@ -11,6 +15,14 @@ object GeneralUtil {
     }
 }
 
+// String extensions
+
 fun String.hashSha256(): String {
     return GeneralUtil.hashString(this, "SHA-256")
+}
+
+// Fragment extensions
+
+fun Fragment.getBaseActivity(): BaseActivity {
+    return requireActivity() as BaseActivity
 }

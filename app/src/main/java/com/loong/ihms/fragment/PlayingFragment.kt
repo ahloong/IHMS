@@ -8,13 +8,13 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.loong.ihms.R
 import com.loong.ihms.databinding.FragmentPlayingBinding
-import com.loong.ihms.utils.LocalStorageUtil
+import com.loong.ihms.utils.UserRelatedUtil
 
 class PlayingFragment : Fragment(R.layout.fragment_playing) {
     private lateinit var binding: FragmentPlayingBinding
     private var mp: MediaPlayer? = null
-    private val baseUrl = LocalStorageUtil.getInstance().readString(LocalStorageUtil.MAIN_API_URL)
-    private val auth = LocalStorageUtil.getInstance().readString(LocalStorageUtil.USER_API_AUTH)
+    private val baseUrl = UserRelatedUtil.getMainApiUrl()
+    private val auth = UserRelatedUtil.getUserApiAuth()
     val track : String = "Burn The Witch"
     val album : String = "Moon Shaped Pool (2016)"
     val artist : String = "Radiohead"

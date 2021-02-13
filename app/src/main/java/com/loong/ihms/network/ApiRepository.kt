@@ -2,11 +2,11 @@ package com.loong.ihms.network
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.loong.ihms.model.AlbumsItem
+import com.loong.ihms.model.AlbumItem
 import com.loong.ihms.model.Song
 import com.loong.ihms.model.UserProfile
 import com.loong.ihms.utils.ConstantDataUtil
-import com.loong.ihms.utils.LocalStorageUtil
+import com.loong.ihms.utils.UserRelatedUtil
 import com.loong.ihms.utils.hashSha256
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -25,10 +25,10 @@ object ApiRepository {
         retrofit = null
     }
 
-    //Retrofit, for compiling the URL before send out
+    // Retrofit, for compiling the URL before send out
     private fun getRetrofitInstance(): Retrofit {
         if (retrofit == null) {
-            val baseUrl = LocalStorageUtil.getInstance().readString(LocalStorageUtil.MAIN_API_URL)
+            val baseUrl = UserRelatedUtil.getMainApiUrl()
             val apiBaseUrl = "${baseUrl}/server/json.server.php/"
 
             val gson = GsonBuilder()
@@ -66,8 +66,8 @@ object ApiRepositoryFunction {
         callback: ApiResponseCallback<UserProfile>
     ) {
         val timestamp = (System.currentTimeMillis() / 1000).toString()
-        val keyHash = password.hashSha256()
-        val passphrase = "${timestamp}${keyHash}".hashSha256()
+        val passwordKeyHarsh = password.hashSha256()
+        val passphrase = "${timestamp}${passwordKeyHarsh}".hashSha256()
 
         val call = ApiRepository.getApiService().getUserLogin(
             ConstantDataUtil.ACTION_HANDSHAKE,
@@ -101,7 +101,7 @@ object ApiRepositoryFunction {
     fun getSongList(
         callback: ApiResponseCallback<ArrayList<Song>>
     ) {
-        val auth = LocalStorageUtil.getInstance().readString(LocalStorageUtil.USER_API_AUTH)
+        val auth = UserRelatedUtil.getUserApiAuth()
 
         val call = ApiRepository.getApiService().getSongList(
             ConstantDataUtil.ACTION_GET_INDEXES,
@@ -127,18 +127,18 @@ object ApiRepositoryFunction {
     }
 
     fun getAlbumList(
-            callback: ApiResponseCallback<ArrayList<AlbumsItem>>
+        callback: ApiResponseCallback<ArrayList<AlbumItem>>
     ) {
-        val auth = LocalStorageUtil.getInstance().readString(LocalStorageUtil.USER_API_AUTH)
+        val auth = UserRelatedUtil.getUserApiAuth()
 
         val call = ApiRepository.getApiService().getAlbumsList(
-                ConstantDataUtil.ACTION_GET_INDEXES,
-                auth,
-                ConstantDataUtil.TYPE_ALBUM
+            ConstantDataUtil.ACTION_GET_INDEXES,
+            auth,
+            ConstantDataUtil.TYPE_ALBUM
         )
 
-        call.enqueue(object : Callback<ArrayList<AlbumsItem>> {
-            override fun onResponse(call: Call<ArrayList<AlbumsItem>>, response: Response<ArrayList<AlbumsItem>>) {
+        call.enqueue(object : Callback<ArrayList<AlbumItem>> {
+            override fun onResponse(call: Call<ArrayList<AlbumItem>>, response: Response<ArrayList<AlbumItem>>) {
                 if (response.code() == 200) {
                     response.body()?.let {
                         callback.onSuccess(it)
@@ -148,7 +148,7 @@ object ApiRepositoryFunction {
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<AlbumsItem>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<AlbumItem>>, t: Throwable) {
                 callback.onFailed()
             }
         })

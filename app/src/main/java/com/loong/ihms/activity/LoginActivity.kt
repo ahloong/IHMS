@@ -10,7 +10,7 @@ import com.loong.ihms.databinding.ActivityLoginBinding
 import com.loong.ihms.model.UserProfile
 import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
-import com.loong.ihms.utils.LocalStorageUtil
+import com.loong.ihms.utils.UserRelatedUtil
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
 
         val url = intent.getStringExtra("ip_login_params") ?: ""
         binding.ipTextView.text = "Connected To: $url"
-        LocalStorageUtil.getInstance().writeString(LocalStorageUtil.MAIN_API_URL, url)
+        UserRelatedUtil.saveMainApiUrl(url)
     }
 
     fun goToHome(view: View) {
@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
                 password,
                 object : ApiResponseCallback<UserProfile> {
                     override fun onSuccess(responseData: UserProfile) {
-                        LocalStorageUtil.getInstance().writeString(LocalStorageUtil.USER_API_AUTH, responseData.auth)
+                        UserRelatedUtil.saveUserApiAuth(responseData.auth)
 
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                         startActivity(intent)

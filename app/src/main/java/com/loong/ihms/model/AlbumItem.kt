@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
-data class AlbumsItem(
+data class AlbumItem(
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
-    @SerializedName("artist") val artist: ArtistX,
+    @SerializedName("artist") val artist: Artist,
     @SerializedName("year") val year: Int,
     @SerializedName("tracks") val tracks: Int,
     @SerializedName("disk") val disk: Int,

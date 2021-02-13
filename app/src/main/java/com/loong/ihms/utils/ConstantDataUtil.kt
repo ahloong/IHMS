@@ -4,11 +4,11 @@ object ConstantDataUtil {
     // API Version
     const val API_VERSION = "350001"
 
-    // Action Type
+    // API Action Type
     const val ACTION_HANDSHAKE = "handshake"
     const val ACTION_GET_INDEXES = "get_indexes"
 
-    // TYPE
+    // API Type
     const val TYPE_SONG = "song"
     const val TYPE_ALBUM = "album"
 }

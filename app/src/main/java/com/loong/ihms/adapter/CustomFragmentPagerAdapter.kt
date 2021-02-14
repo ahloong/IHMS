@@ -1,4 +1,4 @@
-package com.loong.ihms.widget
+package com.loong.ihms.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

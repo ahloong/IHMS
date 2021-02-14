@@ -1,4 +1,4 @@
-package com.loong.ihms.widget
+package com.loong.ihms.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

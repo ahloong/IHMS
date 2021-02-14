@@ -27,7 +27,7 @@
                 android:background="@color/purple_500"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:navigationIcon="@drawable/menu"
+                app:navigationIcon="@drawable/ic_menu"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <FrameLayout
@@ -40,7 +40,7 @@
                 android:id="@+id/bottom_nav"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                app:menu="@menu/home_bottom_nav" />
+                app:menu="@menu/home_bottom_nav_items" />
 
         </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:headerLayout="@layout/nav_header"
-            app:menu="@menu/draw_menu" />
+            app:menu="@menu/side_menu_items" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

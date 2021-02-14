@@ -59,7 +59,7 @@
             android:insetBottom="0dp"
             android:onClick="goToLogin"
             android:text="Confirm"
-            app:icon="@drawable/confirm"
+            app:icon="@drawable/ic_confirm"
             app:iconSize="24dp" />
 
     </LinearLayout>

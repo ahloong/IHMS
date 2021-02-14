@@ -10,9 +10,9 @@ import com.google.android.material.navigation.NavigationView
 import com.loong.ihms.R
 import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityHomeBinding
-import com.loong.ihms.fragment.CuratorFragment
-import com.loong.ihms.fragment.HomeFragment
-import com.loong.ihms.fragment.NowPlayingFragment
+import com.loong.ihms.fragment.MainCuratorFragment
+import com.loong.ihms.fragment.MainHomeFragment
+import com.loong.ihms.fragment.MainNowPlayingFragment
 
 class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityHomeBinding
@@ -32,17 +32,17 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.home_nav -> {
-                openFragment(HomeFragment())
+                openFragment(MainHomeFragment())
                 return true
             }
 
             R.id.now_playing_nav -> {
-                openFragment(NowPlayingFragment())
+                openFragment(MainNowPlayingFragment())
                 return true
             }
 
             R.id.curator_nav -> {
-                openFragment(CuratorFragment())
+                openFragment(MainCuratorFragment())
                 return true
             }
 

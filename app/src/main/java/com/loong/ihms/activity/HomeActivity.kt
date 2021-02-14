@@ -10,16 +10,12 @@ import com.google.android.material.navigation.NavigationView
 import com.loong.ihms.R
 import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityHomeBinding
-import com.loong.ihms.fragment.AlbumFragment
 import com.loong.ihms.fragment.CuratorFragment
 import com.loong.ihms.fragment.HomeFragment
 import com.loong.ihms.fragment.PlayingFragment
-import com.loong.ihms.model.Song
-import com.loong.ihms.network.ApiRepositoryFunction
-import com.loong.ihms.network.ApiResponseCallback
 
 class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var binding: ActivityHomeBinding //data binding
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +27,6 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         binding.toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
-
-        getSongList()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -42,18 +36,17 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 return true
             }
 
-            R.id.now_playing -> {
+            R.id.now_playing_nav -> {
                 openFragment(PlayingFragment())
                 return true
             }
 
-            R.id.curator -> {
+            R.id.curator_nav -> {
                 openFragment(CuratorFragment())
                 return true
             }
 
-            R.id.nav_album -> {
-                openFragment(AlbumFragment())
+            R.id.logout_side -> {
                 return true
             }
         }
@@ -65,18 +58,5 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(binding.homeContainer.id, fragment)
         transaction.commit()
-    }
-
-    private fun getSongList() {
-        ApiRepositoryFunction.getSongList(object: ApiResponseCallback<ArrayList<Song>>{
-            override fun onSuccess(responseData: ArrayList<Song>) {
-                val sss = ""
-            }
-
-            override fun onFailed() {
-
-            }
-
-        })
     }
 }

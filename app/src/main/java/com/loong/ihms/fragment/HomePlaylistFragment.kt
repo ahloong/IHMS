@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.loong.ihms.R
-import com.loong.ihms.databinding.FragmentHomeBinding
+import com.loong.ihms.databinding.FragmentHomePlaylistBinding
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
-    private lateinit var binding: FragmentHomeBinding
+class HomePlaylistFragment : Fragment(R.layout.fragment_home_playlist) {
+    private lateinit var binding: FragmentHomePlaylistBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
+        binding = FragmentHomePlaylistBinding.bind(view)
     }
 }

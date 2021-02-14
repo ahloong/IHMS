@@ -12,7 +12,7 @@ import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityHomeBinding
 import com.loong.ihms.fragment.CuratorFragment
 import com.loong.ihms.fragment.HomeFragment
-import com.loong.ihms.fragment.PlayingFragment
+import com.loong.ihms.fragment.NowPlayingFragment
 
 class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityHomeBinding
@@ -37,7 +37,7 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             }
 
             R.id.now_playing_nav -> {
-                openFragment(PlayingFragment())
+                openFragment(NowPlayingFragment())
                 return true
             }
 

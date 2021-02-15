@@ -2,10 +2,10 @@ package com.loong.ihms.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentPagerAdapter
 import java.util.*
 
-class CustomFragmentPagerAdapter : FragmentStatePagerAdapter {
+class CustomFragmentPagerAdapter : FragmentPagerAdapter {
     private var fragmentList: ArrayList<Fragment>
     private var fragmentTitleList = ArrayList<String>()
 

@@ -23,6 +23,10 @@ class LoginActivity : BaseActivity() {
         val url = intent.getStringExtra(ConstantDataUtil.IP_LOGIN_PARAMS) ?: ""
         binding.ipTextView.text = "Connected To: $url"
         UserRelatedUtil.saveMainApiUrl(url)
+
+        // For testing
+        binding.usernameField.setText("admin")
+        binding.passwordField.setText("kkl555666")
     }
 
     fun goToHome(view: View) {

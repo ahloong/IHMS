@@ -6,6 +6,7 @@ object ConstantDataUtil {
 
     // API Action Type
     const val ACTION_HANDSHAKE = "handshake"
+    const val ACTION_ALBUMS = "albums"
     const val ACTION_GET_INDEXES = "get_indexes"
 
     // API Type

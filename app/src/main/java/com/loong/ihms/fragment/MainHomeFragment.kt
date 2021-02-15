@@ -32,6 +32,7 @@ class MainHomeFragment : Fragment(R.layout.fragment_main_home) {
 
         val customFragmentPagerAdapter = CustomFragmentPagerAdapter(childFragmentManager, fragmentList, fragmentTitleList)
         binding.homeVp.adapter = customFragmentPagerAdapter
+        binding.homeVp.offscreenPageLimit = 3
         binding.homeTl.setupWithViewPager(binding.homeVp)
     }
 }

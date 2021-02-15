@@ -1,13 +1,13 @@
 package com.loong.ihms.network
 
 import com.loong.ihms.model.AlbumItem
-import com.loong.ihms.model.Song
 import com.loong.ihms.model.UserProfile
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
+    // Login using username and password
     @GET(".")
     fun getUserLogin(
         @Query("action") action: String,
@@ -17,17 +17,18 @@ interface ApiService {
         @Query("user") user: String
     ): Call<UserProfile>
 
+    // Get a list of albums
     @GET(".")
-    fun getSongList(
-        @Query("action") action: String,
+    fun getAlbumList(
         @Query("auth") auth: String,
-        @Query("type") type: String,
-    ): Call<ArrayList<Song>>
+        @Query("action") action: String
+    ): Call<ArrayList<AlbumItem>>
 
+    // Get an album's details
     @GET(".")
-    fun getAlbumsList(
-        @Query("action") action: String,
+    fun getAlbumDetails(
         @Query("auth") auth: String,
-        @Query("type") type: String,
+        @Query("action") action: String,
+        @Query("filter") filter: String
     ): Call<ArrayList<AlbumItem>>
 }

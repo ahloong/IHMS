@@ -17,6 +17,8 @@ import com.loong.ihms.utils.getBaseActivity
 
 class HomeAlbumFragment : Fragment(R.layout.fragment_home_album) {
     private lateinit var binding: FragmentHomeAlbumBinding
+
+    private lateinit var adapter: AlbumListAdapter
     private var albumList: ArrayList<AlbumItem> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +51,7 @@ class HomeAlbumFragment : Fragment(R.layout.fragment_home_album) {
     }
 
     private fun setupList() {
-        val adapter = AlbumListAdapter(getBaseActivity(), albumList)
+        adapter = AlbumListAdapter(getBaseActivity(), albumList)
         binding.albumContentRv.layoutManager = GridLayoutManager(getBaseActivity(), 2)
         binding.albumContentRv.adapter = adapter
     }

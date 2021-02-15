@@ -15,6 +15,9 @@ class IpLoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ip_login)
+
+        // For testing, can change to newest url
+        binding.ipPortEditText.setText("http://b439009bf478.ngrok.io")
     }
 
     fun goToLogin(view: View) {

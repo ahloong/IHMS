@@ -157,5 +157,5 @@ object ApiRepositoryFunction {
 
 interface ApiResponseCallback<T> {
     fun onSuccess(responseData: T)
-    fun onFailed()
+    fun onFailed() {}
 }

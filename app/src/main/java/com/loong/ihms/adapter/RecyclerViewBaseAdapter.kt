@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class RecyclerViewBaseAdapter : RecyclerView.Adapter<RecyclerViewBaseAdapter.MyViewHolder>() {
-    abstract fun setBindViewHolder(viewHolder: MyViewHolder?, position: Int)
+    abstract fun setBindViewHolder(viewHolder: MyViewHolder, position: Int)
     abstract fun getLayoutIdForPosition(position: Int): Int
     abstract fun getItemTotalCount(): Int
 

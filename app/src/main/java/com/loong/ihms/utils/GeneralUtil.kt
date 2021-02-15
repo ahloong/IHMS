@@ -1,8 +1,11 @@
 package com.loong.ihms.utils
 
+import android.content.res.Resources
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import com.loong.ihms.base.BaseActivity
 import java.security.MessageDigest
+import kotlin.math.roundToInt
 
 // General functions
 
@@ -14,6 +17,20 @@ object GeneralUtil {
             .fold("", { str, it -> str + "%02x".format(it) })
     }
 }
+
+// Int / Float extensions
+
+val Int.dp
+    get() = toFloat().dp.roundToInt()
+
+val Float.dp
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, Resources.getSystem().displayMetrics)
+
+val Int.sp
+    get() = toFloat().sp.roundToInt()
+
+val Float.sp
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, Resources.getSystem().displayMetrics)
 
 // String extensions
 

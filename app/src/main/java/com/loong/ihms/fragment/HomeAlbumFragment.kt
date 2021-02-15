@@ -10,56 +10,59 @@ import com.loong.ihms.R
 import com.loong.ihms.adapter.RecyclerViewBaseAdapter
 import com.loong.ihms.databinding.FragmentHomeAlbumBinding
 import com.loong.ihms.databinding.ViewAlbumItemBinding
-import com.loong.ihms.model.AlbumItem
+import com.loong.ihms.model.Album
 import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
+import com.loong.ihms.utils.SpaceItemDecoration
+import com.loong.ihms.utils.dp
 import com.loong.ihms.utils.getBaseActivity
 
 class HomeAlbumFragment : Fragment(R.layout.fragment_home_album) {
     private lateinit var binding: FragmentHomeAlbumBinding
-
     private lateinit var adapter: AlbumListAdapter
-    private var albumList: ArrayList<AlbumItem> = ArrayList()
+    private var dataItemList: ArrayList<Album> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeAlbumBinding.bind(view)
 
         binding.albumContentSrl.setOnRefreshListener {
-            getAlbumList()
+            getDataList()
         }
 
-        getAlbumList()
+        binding.albumContentRv.layoutManager = GridLayoutManager(getBaseActivity(), 2)
+        binding.albumContentRv.addItemDecoration(SpaceItemDecoration(16.dp))
+
+        getDataList()
     }
 
-    private fun getAlbumList() {
+    private fun getDataList() {
         binding.albumContentSrl.isRefreshing = true
 
-        ApiRepositoryFunction.getAlbumList(object : ApiResponseCallback<ArrayList<AlbumItem>> {
-            override fun onSuccess(responseData: ArrayList<AlbumItem>) {
+        ApiRepositoryFunction.getAlbumList(object : ApiResponseCallback<ArrayList<Album>> {
+            override fun onSuccess(responseData: ArrayList<Album>) {
                 binding.albumContentSrl.isRefreshing = false
-                albumList = responseData
+                dataItemList = responseData
                 setupList()
             }
 
             override fun onFailed() {
                 binding.albumContentSrl.isRefreshing = false
-                albumList = ArrayList()
+                dataItemList = ArrayList()
                 setupList()
             }
         })
     }
 
     private fun setupList() {
-        adapter = AlbumListAdapter(getBaseActivity(), albumList)
-        binding.albumContentRv.layoutManager = GridLayoutManager(getBaseActivity(), 2)
+        adapter = AlbumListAdapter(getBaseActivity(), dataItemList)
         binding.albumContentRv.adapter = adapter
     }
 
-    private class AlbumListAdapter(val context: Context, val itemList: ArrayList<AlbumItem>) : RecyclerViewBaseAdapter() {
+    private class AlbumListAdapter(val context: Context, val itemList: ArrayList<Album>) : RecyclerViewBaseAdapter() {
         override fun setBindViewHolder(viewHolder: MyViewHolder, position: Int) {
             val binding: ViewAlbumItemBinding = viewHolder.binding as ViewAlbumItemBinding
-            val itemData: AlbumItem = itemList[position]
+            val itemData: Album = itemList[position]
 
             Glide.with(context)
                 .load(itemData.art)

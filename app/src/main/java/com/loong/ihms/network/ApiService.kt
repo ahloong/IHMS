@@ -1,6 +1,7 @@
 package com.loong.ihms.network
 
-import com.loong.ihms.model.AlbumItem
+import com.loong.ihms.model.Album
+import com.loong.ihms.model.Artist
 import com.loong.ihms.model.UserProfile
 import retrofit2.Call
 import retrofit2.http.GET
@@ -22,7 +23,7 @@ interface ApiService {
     fun getAlbumList(
         @Query("auth") auth: String,
         @Query("action") action: String
-    ): Call<ArrayList<AlbumItem>>
+    ): Call<ArrayList<Album>>
 
     // Get an album's details
     @GET(".")
@@ -30,5 +31,12 @@ interface ApiService {
         @Query("auth") auth: String,
         @Query("action") action: String,
         @Query("filter") filter: String
-    ): Call<ArrayList<AlbumItem>>
+    ): Call<ArrayList<Album>>
+
+    // Get a list of artist
+    @GET(".")
+    fun getArtistList(
+        @Query("auth") auth: String,
+        @Query("action") action: String
+    ): Call<ArrayList<Artist>>
 }

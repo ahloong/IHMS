@@ -10,6 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
@@ -36,7 +38,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:hint="Username"
             app:boxBackgroundColor="@color/white">
 
@@ -45,7 +47,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,7 +66,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +80,7 @@
             android:insetBottom="0dp"
             android:onClick="goToHome"
             android:text="Confirm"
-            app:icon="@drawable/confirm"
+            app:icon="@drawable/ic_confirm"
             app:iconSize="24dp" />
 
     </LinearLayout>

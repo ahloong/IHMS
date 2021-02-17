@@ -1,26 +1,31 @@
 package com.loong.ihms.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.loong.ihms.R
+import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityHomeBinding
-import com.loong.ihms.fragment.AlbumFragment
-import com.loong.ihms.fragment.CuratorFragment
-import com.loong.ihms.fragment.HomeFragment
-import com.loong.ihms.fragment.PlayingFragment
-import com.loong.ihms.model.Song
-import com.loong.ihms.network.ApiRepository
-import com.loong.ihms.network.ApiRepositoryFunction
-import com.loong.ihms.network.ApiResponseCallback
+import com.loong.ihms.fragment.MainCuratorFragment
+import com.loong.ihms.fragment.MainHomeFragment
+import com.loong.ihms.fragment.MainNowPlayingFragment
 
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var binding: ActivityHomeBinding //data binding
+private const val ID_HOME_CONTAINER_FL: Int = R.id.home_container_fl
+private const val ID_FRAGMENT_HOME: Int = R.id.home_nav
+private const val ID_FRAGMENT_NOW_PLAYING: Int = R.id.now_playing_nav
+private const val ID_FRAGMENT_CURATOR: Int = R.id.curator_nav
+private const val ID_LOGOUT: Int = R.id.logout_side
+
+class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var binding: ActivityHomeBinding
+    private val fragmentManager: FragmentManager = supportFragmentManager
+    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,33 +33,33 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         binding.bottomNav.setOnNavigationItemSelectedListener(this)
         binding.navView.setNavigationItemSelectedListener(this)
+        binding.toolbar.setNavigationOnClickListener { binding.drawerLayout.openDrawer(GravityCompat.START) }
 
-        binding.toolbar.setNavigationOnClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-        getSongList()
+        setupViewPager()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.home_nav -> {
-                openFragment(HomeFragment())
+            ID_FRAGMENT_HOME -> {
+                showFragment(ID_FRAGMENT_HOME.toString())
                 return true
             }
 
-            R.id.now_playing -> {
-                openFragment(PlayingFragment())
+            ID_FRAGMENT_NOW_PLAYING -> {
+                showFragment(ID_FRAGMENT_NOW_PLAYING.toString())
                 return true
             }
 
-            R.id.curator -> {
-                openFragment(CuratorFragment())
+            ID_FRAGMENT_CURATOR -> {
+                showFragment(ID_FRAGMENT_CURATOR.toString())
                 return true
             }
 
-            R.id.nav_album -> {
-                openFragment(AlbumFragment())
+            ID_LOGOUT -> {
+                val intent = Intent(this, IpLoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+
                 return true
             }
         }
@@ -62,22 +67,56 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return false
     }
 
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(binding.homeContainer.id, fragment)
-        transaction.commit()
+    private fun setupViewPager() {
+        val homeFragment = MainHomeFragment()
+        val nowPlayingFragment = MainNowPlayingFragment()
+        val curatorFragment = MainCuratorFragment()
+
+        fragmentManager
+            .beginTransaction()
+            .add(ID_HOME_CONTAINER_FL, homeFragment, ID_FRAGMENT_HOME.toString())
+            .hide(homeFragment)
+            .commit()
+
+        fragmentManager
+            .beginTransaction()
+            .add(ID_HOME_CONTAINER_FL, nowPlayingFragment, ID_FRAGMENT_NOW_PLAYING.toString())
+            .hide(nowPlayingFragment)
+            .commit()
+
+        fragmentManager
+            .beginTransaction()
+            .add(ID_HOME_CONTAINER_FL, curatorFragment, ID_FRAGMENT_CURATOR.toString())
+            .hide(curatorFragment)
+            .commit()
+
+        fragmentManager.executePendingTransactions()
+        showFragment(ID_FRAGMENT_HOME.toString())
     }
 
-    private fun getSongList() {
-        ApiRepositoryFunction.getSongList(object: ApiResponseCallback<ArrayList<Song>>{
-            override fun onSuccess(responseData: ArrayList<Song>) {
-                val sss = ""
-            }
+    private fun showFragment(tag: String) {
+        val fragment = fragmentManager.findFragmentByTag(tag)
 
-            override fun onFailed() {
+        if (fragment != null) {
+            replaceFragment(fragment)
+        }
+    }
 
-            }
+    private fun replaceFragment(fragment: Fragment) {
+        if (currentFragment == null) {
+            fragmentManager
+                .beginTransaction()
+                .show(fragment)
+                .commit()
+        } else if (currentFragment != null && fragment != currentFragment) {
+            fragmentManager
+                .beginTransaction()
+                .hide(currentFragment!!)
+                .show(fragment)
+                .commit()
+        }
 
-        })
+        fragmentManager.executePendingTransactions()
+        currentFragment = fragment
     }
 }

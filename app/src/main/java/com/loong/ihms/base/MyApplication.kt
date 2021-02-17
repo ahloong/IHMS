@@ -9,8 +9,6 @@ import timber.log.Timber.DebugTree
 class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-
-        // Local storage init
         LocalStorageUtil.initialize(this)
 
         if (BuildConfig.DEBUG) {

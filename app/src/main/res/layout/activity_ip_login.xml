@@ -10,8 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
@@ -37,7 +35,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:hint="IP Address and Port Number"
             app:boxBackgroundColor="@color/white">
 
@@ -46,9 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLines="1"
-                android:paddingStart="0dp"
-                android:paddingEnd="0dp" />
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,7 +56,7 @@
             android:insetBottom="0dp"
             android:onClick="goToLogin"
             android:text="Confirm"
-            app:icon="@drawable/ic_confirm"
+            app:icon="@drawable/confirm"
             app:iconSize="24dp" />
 
     </LinearLayout>

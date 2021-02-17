@@ -24,13 +24,12 @@ class LogJsonInterceptor : Interceptor {
                 try {
                     val gson = GsonBuilder().setPrettyPrinting().create()
                     val jsonElement = JsonParser.parseString(rawResponseString)
-
                     formattedString = gson.toJson(jsonElement)
                 } catch (e: JsonParseException) {
                     e.printStackTrace()
                 }
 
-                val fullLog = "ihms_api_call: ${request.url}\n${formattedString}"
+                val fullLog = "ihms_api_call:\n${request.url}\n${formattedString}"
                 Timber.i(fullLog)
             } catch (e: Exception) {
                 Timber.e(e)

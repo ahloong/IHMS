@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.loong.ihms.R
-import com.loong.ihms.databinding.FragmentMainCuratorBinding
+import com.loong.ihms.databinding.FragmentHomeBinding
 
-class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
-    private lateinit var binding: FragmentMainCuratorBinding
+class HomeFragment : Fragment(R.layout.fragment_home) {
+    private lateinit var binding: FragmentHomeBinding //data binding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentMainCuratorBinding.bind(view)
+        binding = FragmentHomeBinding.bind(view)
     }
 }

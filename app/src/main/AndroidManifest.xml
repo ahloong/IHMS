@@ -40,6 +40,9 @@
         <activity
             android:name=".activity.AlbumDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ArtistAlbumListActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

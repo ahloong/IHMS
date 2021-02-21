@@ -18,4 +18,5 @@ object ConstantDataUtil {
     // Extra Params Name
     const val IP_LOGIN_PARAMS = "ip_login_params"
     const val ALBUM_DETAILS_ID_PARAMS = "album_details_id_params"
+    const val ARTIST_ALBUM_ID_PARAMS = "artist_album_id_params"
 }

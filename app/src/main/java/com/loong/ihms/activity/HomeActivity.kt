@@ -31,9 +31,9 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
-        binding.bottomNav.setOnNavigationItemSelectedListener(this)
-        binding.navView.setNavigationItemSelectedListener(this)
-        binding.toolbar.setNavigationOnClickListener { binding.drawerLayout.openDrawer(GravityCompat.START) }
+        binding.homeBottomNavView.setOnNavigationItemSelectedListener(this)
+        binding.homeNavView.setNavigationItemSelectedListener(this)
+        binding.homeToolbar.setNavigationOnClickListener { binding.drawerLayout.openDrawer(GravityCompat.START) }
 
         setupViewPager()
     }

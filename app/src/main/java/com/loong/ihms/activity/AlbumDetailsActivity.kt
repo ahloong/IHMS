@@ -1,6 +1,7 @@
 package com.loong.ihms.activity
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -46,11 +47,8 @@ class AlbumDetailsActivity : BaseActivity() {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(binding.albumDetailsToolbar)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = ""
+        binding.albumDetailsToolbar.navigationIcon?.setTint(Color.WHITE)
 
         binding.albumDetailsToolbar.setNavigationOnClickListener {
             onBackPressed()

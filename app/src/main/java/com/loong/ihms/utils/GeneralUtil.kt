@@ -16,6 +16,13 @@ object GeneralUtil {
             .digest(input.toByteArray())
             .fold("", { str, it -> str + "%02x".format(it) })
     }
+
+    fun fromSecToMinSec(seconds: Int): String {
+        val min: Int = seconds / 60
+        val sec: Int = seconds % 60
+
+        return String.format("%02d:%02d", min, sec)
+    }
 }
 
 // Int / Float extensions

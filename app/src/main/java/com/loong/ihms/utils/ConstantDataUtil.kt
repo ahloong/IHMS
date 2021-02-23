@@ -8,6 +8,7 @@ object ConstantDataUtil {
     const val ACTION_HANDSHAKE = "handshake"
     const val ACTION_ALBUMS = "albums"
     const val ACTION_ALBUM = "album"
+    const val ACTION_ALBUM_SONGS = "album_songs"
     const val ACTION_ARTISTS = "artists"
     const val ACTION_ARTIST = "artist"
 

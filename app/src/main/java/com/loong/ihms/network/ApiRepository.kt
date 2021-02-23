@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.loong.ihms.model.Album
 import com.loong.ihms.model.Artist
+import com.loong.ihms.model.Song
 import com.loong.ihms.model.UserProfile
 import com.loong.ihms.utils.ConstantDataUtil
 import com.loong.ihms.utils.UserRelatedUtil
@@ -147,6 +148,35 @@ object ApiRepositoryFunction {
             }
 
             override fun onFailure(call: Call<ArrayList<Album>>, t: Throwable) {
+                callback.onFailed()
+            }
+        })
+    }
+
+    fun getAlbumSongList(
+        albumId: Int,
+        callback: ApiResponseCallback<ArrayList<Song>>
+    ) {
+        val call = ApiRepository.getApiService().getAlbumSongList(
+            UserRelatedUtil.getUserApiAuth(),
+            ConstantDataUtil.ACTION_ALBUM_SONGS,
+            albumId.toString()
+        )
+
+        call.enqueue(object : Callback<ArrayList<Song>> {
+            override fun onResponse(call: Call<ArrayList<Song>>, response: Response<ArrayList<Song>>) {
+                if (response.code() == 200) {
+                    response.body()?.let {
+                        if (it.size > 0) {
+                            callback.onSuccess(it)
+                        }
+                    }
+                } else {
+                    callback.onFailed()
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Song>>, t: Throwable) {
                 callback.onFailed()
             }
         })

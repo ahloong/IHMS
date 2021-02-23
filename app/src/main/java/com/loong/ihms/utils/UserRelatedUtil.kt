@@ -20,4 +20,6 @@ object UserRelatedUtil {
     fun saveUserApiAuth(data: String) {
         LocalStorageUtil.getInstance().writeString(LocalStorageUtil.USER_API_AUTH, data)
     }
+
+    // Local Album List
 }

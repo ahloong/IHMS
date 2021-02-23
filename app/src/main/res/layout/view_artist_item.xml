@@ -6,6 +6,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/artist_item_main_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_item_gray_corner"
@@ -13,7 +14,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/album_item_title_tv"
+            android:id="@+id/artist_item_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="1"

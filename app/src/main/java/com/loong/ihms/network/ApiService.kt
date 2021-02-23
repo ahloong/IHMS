@@ -48,4 +48,12 @@ interface ApiService {
         @Query("auth") auth: String,
         @Query("action") action: String
     ): Call<ArrayList<Artist>>
+
+    // Get an artist's album list
+    @GET(".")
+    fun getArtistAlbumList(
+        @Query("auth") auth: String,
+        @Query("action") action: String,
+        @Query("filter") filter: String
+    ): Call<ArrayList<Album>>
 }

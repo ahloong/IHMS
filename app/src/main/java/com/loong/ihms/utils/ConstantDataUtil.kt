@@ -10,7 +10,7 @@ object ConstantDataUtil {
     const val ACTION_ALBUM = "album"
     const val ACTION_ALBUM_SONGS = "album_songs"
     const val ACTION_ARTISTS = "artists"
-    const val ACTION_ARTIST = "artist"
+    const val ACTION_ARTIST_ALBUMS = "artist_albums"
 
     // API Type
     const val TYPE_SONG = "song"
@@ -20,4 +20,5 @@ object ConstantDataUtil {
     const val IP_LOGIN_PARAMS = "ip_login_params"
     const val ALBUM_DETAILS_ID_PARAMS = "album_details_id_params"
     const val ARTIST_ALBUM_ID_PARAMS = "artist_album_id_params"
+    const val ARTIST_ALBUM_NAME_PARAMS = "artist_album_name_params"
 }

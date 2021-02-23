@@ -34,7 +34,7 @@ class AlbumDetailsActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_album_details)
         albumId = intent.getIntExtra(ConstantDataUtil.ALBUM_DETAILS_ID_PARAMS, 0)
 
-        setupToolbar()
+        setupToolbar(binding.albumDetailsToolbar)
 
         binding.albumDetailsRv.layoutManager = LinearLayoutManager(this)
         binding.albumDetailsRv.addItemDecoration(SpaceItemDecoration(8.dp))
@@ -43,15 +43,6 @@ class AlbumDetailsActivity : BaseActivity() {
 
         } else {
             getAlbumData()
-        }
-    }
-
-    private fun setupToolbar() {
-        supportActionBar?.title = ""
-        binding.albumDetailsToolbar.navigationIcon?.setTint(Color.WHITE)
-
-        binding.albumDetailsToolbar.setNavigationOnClickListener {
-            onBackPressed()
         }
     }
 
@@ -74,7 +65,7 @@ class AlbumDetailsActivity : BaseActivity() {
     }
 
     private fun setupView() {
-        supportActionBar?.title = albumItem?.name ?: ""
+        binding.albumDetailsToolbar.title = albumItem?.name ?: ""
 
         Glide.with(this)
             .load(albumItem?.art ?: "")

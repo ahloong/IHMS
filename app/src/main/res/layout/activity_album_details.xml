@@ -24,7 +24,7 @@
                 android:background="@color/purple_500"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:navigationIcon="@drawable/ic_arrow_back"
+                app:contentInsetEnd="16dp"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <LinearLayout
@@ -45,7 +45,7 @@
                     android:id="@+id/album_details_rv"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:clipToPadding="false"

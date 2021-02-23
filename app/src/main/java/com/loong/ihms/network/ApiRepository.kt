@@ -206,6 +206,33 @@ object ApiRepositoryFunction {
             }
         })
     }
+
+    fun getArtistAlbumList(
+        artistId: Int,
+        callback: ApiResponseCallback<ArrayList<Album>>
+    ) {
+        val call = ApiRepository.getApiService().getArtistAlbumList(
+            UserRelatedUtil.getUserApiAuth(),
+            ConstantDataUtil.ACTION_ARTIST_ALBUMS,
+            artistId.toString()
+        )
+
+        call.enqueue(object : Callback<ArrayList<Album>> {
+            override fun onResponse(call: Call<ArrayList<Album>>, response: Response<ArrayList<Album>>) {
+                if (response.code() == 200) {
+                    response.body()?.let {
+                        callback.onSuccess(it)
+                    }
+                } else {
+                    callback.onFailed()
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Album>>, t: Throwable) {
+                callback.onFailed()
+            }
+        })
+    }
 }
 
 interface ApiResponseCallback<T> {

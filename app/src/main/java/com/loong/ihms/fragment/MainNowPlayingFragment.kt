@@ -94,8 +94,8 @@ class MainNowPlayingFragment : Fragment(R.layout.fragment_main_now_playing) {
     }
 
     fun startPlayingSong(songList: ArrayList<Song>, position: Int) {
-        mainSongList = songList
         exoPlayer?.clearMediaItems()
+        mainSongList = songList
 
         mainSongList.forEach { song ->
             val mediaItem: MediaItem = MediaItem.fromUri(song.url)

@@ -44,6 +44,7 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 val songPosition = intent?.getIntExtra(ConstantDataUtil.START_PLAYING_SONG_POSITION_EXTRA, 0) ?: 0
 
                 if (songListJsonStr.isNotEmpty()) {
+                    binding.homeBottomNavView.selectedItemId = ID_FRAGMENT_NOW_PLAYING
                     showFragment(ID_FRAGMENT_NOW_PLAYING.toString())
 
                     val songList = Gson().fromJson<ArrayList<Song>>(songListJsonStr)

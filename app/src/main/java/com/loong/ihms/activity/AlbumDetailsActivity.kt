@@ -1,11 +1,13 @@
 package com.loong.ihms.activity
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.loong.ihms.R
 import com.loong.ihms.adapter.RecyclerViewBaseAdapter
 import com.loong.ihms.base.BaseActivity
@@ -74,11 +76,25 @@ class AlbumDetailsActivity : BaseActivity() {
         binding.albumDetailsRv.adapter = adapter
 
         binding.albumDetailsPlayFab.setOnClickListener {
-
+            startPlaying(0)
         }
     }
 
-    private class SongListAdapter(val context: Context, val itemList: ArrayList<Song>) : RecyclerViewBaseAdapter() {
+    private fun startPlaying(position: Int) {
+        val songListJsonStr = Gson().toJson(songList)
+
+        val localBroadcastIntent = Intent(ConstantDataUtil.START_PLAYING_INTENT)
+        localBroadcastIntent.putExtra(ConstantDataUtil.START_PLAYING_SONG_LIST_EXTRA, songListJsonStr)
+        localBroadcastIntent.putExtra(ConstantDataUtil.START_PLAYING_SONG_POSITION_EXTRA, position)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(localBroadcastIntent)
+
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
+    }
+
+    private class SongListAdapter(val activity: AlbumDetailsActivity, val itemList: ArrayList<Song>) : RecyclerViewBaseAdapter() {
         override fun setBindViewHolder(viewHolder: MyViewHolder, position: Int) {
             val binding: ViewTrackItemBinding = viewHolder.binding as ViewTrackItemBinding
             val itemData: Song = itemList[position]
@@ -88,13 +104,13 @@ class AlbumDetailsActivity : BaseActivity() {
             binding.trackArtistTv.text = itemData.artist.name
 
             if (position % 2 == 0) {
-                binding.trackMainLl.background = ContextCompat.getDrawable(context, R.drawable.bg_item_gray_corner)
+                binding.trackMainLl.background = ContextCompat.getDrawable(activity, R.drawable.bg_item_gray_corner)
             } else {
-                binding.trackMainLl.background = ContextCompat.getDrawable(context, R.drawable.bg_item_white_corner)
+                binding.trackMainLl.background = ContextCompat.getDrawable(activity, R.drawable.bg_item_white_corner)
             }
 
             binding.trackPlayImg.setOnClickListener {
-
+                activity.startPlaying(position)
             }
         }
 

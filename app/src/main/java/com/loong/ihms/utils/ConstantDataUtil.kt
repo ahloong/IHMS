@@ -21,4 +21,9 @@ object ConstantDataUtil {
     const val ALBUM_DETAILS_ID_PARAMS = "album_details_id_params"
     const val ARTIST_ALBUM_ID_PARAMS = "artist_album_id_params"
     const val ARTIST_ALBUM_NAME_PARAMS = "artist_album_name_params"
+
+    // Local Broadcast
+    const val START_PLAYING_INTENT = "start_playing_intent"
+    const val START_PLAYING_SONG_LIST_EXTRA = "start_playing_song_list_extra"
+    const val START_PLAYING_SONG_POSITION_EXTRA = "start_playing_song_position_extra"
 }

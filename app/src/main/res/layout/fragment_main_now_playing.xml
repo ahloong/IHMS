@@ -9,24 +9,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <View
-            android:id="@+id/play_song_bg_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/purple_200">
 
         <ImageView
             android:id="@+id/play_song_img"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="56dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,66 +71,18 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-        </LinearLayout>
-
-        <View
-            android:id="@+id/play_song_bg_bottom_guide_view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="28dp"
-            app:layout_constraintBottom_toBottomOf="@id/play_song_bg_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/play_song_bg_bottom_guide_view">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/play_song_previous_fab"
-                android:layout_width="wrap_content"
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/play_song_pv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:elevation="0dp"
-                tools:ignore="ContentDescription" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/play_song_play_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:elevation="0dp"
-                tools:ignore="ContentDescription" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/play_song_next_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:elevation="0dp"
-                tools:ignore="ContentDescription" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_marginTop="16dp"
+                android:background="@color/transparent"
+                app:controller_layout_id="@layout/view_custom_audio_control"
+                app:hide_on_touch="false"
+                app:show_timeout="0"
+                app:shutter_background_color="@color/transparent"
+                app:surface_type="none"
+                app:use_artwork="false" />
 
         </LinearLayout>
 

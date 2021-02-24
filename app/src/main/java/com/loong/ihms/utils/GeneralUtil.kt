@@ -3,6 +3,8 @@ package com.loong.ihms.utils
 import android.content.res.Resources
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.loong.ihms.base.BaseActivity
 import java.security.MessageDigest
 import kotlin.math.roundToInt
@@ -24,6 +26,10 @@ object GeneralUtil {
         return String.format("%02d:%02d", min, sec)
     }
 }
+
+// Gson
+
+inline fun <reified T> Gson.fromJson(json: String): T = fromJson(json, object: TypeToken<T>() {}.type)
 
 // Int / Float extensions
 

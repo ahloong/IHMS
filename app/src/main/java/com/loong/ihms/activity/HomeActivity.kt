@@ -1,20 +1,30 @@
 package com.loong.ihms.activity
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.gson.Gson
 import com.loong.ihms.R
 import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityHomeBinding
 import com.loong.ihms.fragment.MainCuratorFragment
 import com.loong.ihms.fragment.MainHomeFragment
 import com.loong.ihms.fragment.MainNowPlayingFragment
+import com.loong.ihms.model.Song
+import com.loong.ihms.utils.ConstantDataUtil
+import com.loong.ihms.utils.fromJson
 
 private const val ID_HOME_CONTAINER_FL: Int = R.id.home_container_fl
 private const val ID_FRAGMENT_HOME: Int = R.id.home_nav
@@ -27,6 +37,26 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private val fragmentManager: FragmentManager = supportFragmentManager
     private var currentFragment: Fragment? = null
 
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                val songListJsonStr = intent?.getStringExtra(ConstantDataUtil.START_PLAYING_SONG_LIST_EXTRA) ?: ""
+                val songPosition = intent?.getIntExtra(ConstantDataUtil.START_PLAYING_SONG_POSITION_EXTRA, 0) ?: 0
+
+                if (songListJsonStr.isNotEmpty()) {
+                    showFragment(ID_FRAGMENT_NOW_PLAYING.toString())
+
+                    val songList = Gson().fromJson<ArrayList<Song>>(songListJsonStr)
+                    val fragment = fragmentManager.findFragmentByTag(ID_FRAGMENT_NOW_PLAYING.toString())
+
+                    if (fragment is MainNowPlayingFragment) {
+                        fragment.startPlayingSong(songList, songPosition)
+                    }
+                }
+            }, 500)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
@@ -36,6 +66,18 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         binding.homeToolbar.setNavigationOnClickListener { binding.drawerLayout.openDrawer(GravityCompat.START) }
 
         setupViewPager()
+
+        LocalBroadcastManager
+            .getInstance(this)
+            .registerReceiver(
+                broadcastReceiver,
+                IntentFilter(ConstantDataUtil.START_PLAYING_INTENT)
+            )
+    }
+
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+        super.onDestroy()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

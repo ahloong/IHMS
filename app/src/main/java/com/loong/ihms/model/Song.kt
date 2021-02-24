@@ -43,5 +43,13 @@ data class Song(
     @SerializedName("replaygain_album_peak") val replayGainAlbumPeak: String,
     @SerializedName("replaygain_track_gain") val replayGainTrackGain: String,
     @SerializedName("replaygain_track_peak") val replayGainTrackPeak: String,
-    @SerializedName("genre") val genre: List<Any>
-)
+    @SerializedName("genre") val genre: List<Any>,
+) {
+    fun getMediaType(): String {
+        return when {
+            mime.contains("flac", ignoreCase = true) -> "FLAC"
+            mime.contains("mp3", ignoreCase = true) -> "MP3"
+            else -> "MUSIC"
+        }
+    }
+}

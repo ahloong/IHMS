@@ -29,10 +29,10 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
 
     private val categoryList: ArrayList<CuratorCategory> by lazy {
         arrayListOf(
-            CuratorCategory("Energy", "Do you feel energetic when listening to this song?"),
-            CuratorCategory("Danceability", "Do you feel you would like to dance to this song?"),
-            CuratorCategory("Valance", "Do you feel this song give you positive mood?"),
-            CuratorCategory("Acoustic", "How acoustic the music is?")
+            CuratorCategory("Energy", "Do you feel energetic when listening to this song?", "Less Energetic", "More Energetic"),
+            CuratorCategory("Danceability", "Do you feel you would like to dance to this song?", "No", "Yes"),
+            CuratorCategory("Valance", "Do you feel this song give you positive mood?", "Less Positive", "More Positive"),
+            CuratorCategory("Acoustic", "How acoustic the music is?", "Less Acoustic", "More Acoustic")
         )
     }
 
@@ -69,23 +69,21 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         binding.curatorSongPreviousFab.setOnClickListener {
             if (currentSongPosition > 0) {
                 currentSongPosition -= 1
+                currentCategoryPosition = 0
+
+                setupSongView()
+                setupCuratorView()
             }
-
-            currentCategoryPosition = 0
-
-            setupSongView()
-            setupCuratorView()
         }
 
         binding.curatorSongNextFab.setOnClickListener {
             if (currentSongPosition < (allSongList.size - 1)) {
                 currentSongPosition += 1
+                currentCategoryPosition = 0
+
+                setupSongView()
+                setupCuratorView()
             }
-
-            currentCategoryPosition = 0
-
-            setupSongView()
-            setupCuratorView()
         }
 
         binding.curatorSongPlayFab.setOnClickListener {
@@ -104,17 +102,15 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         binding.curatorSongCatPreviousMb.setOnClickListener {
             if (currentCategoryPosition > CATEGORY_ENERGY) {
                 currentCategoryPosition -= 1
+                setupCuratorView()
             }
-
-            setupCuratorView()
         }
 
         binding.curatorSongCatNextMb.setOnClickListener {
             if (currentCategoryPosition < CATEGORY_ACOUSTIC) {
                 currentCategoryPosition += 1
+                setupCuratorView()
             }
-
-            setupCuratorView()
         }
 
         binding.curatorSongCatDoneMb.setOnClickListener {
@@ -166,6 +162,8 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
             binding.curatorSongAlbumTv.text = currentItem.album.name
             binding.curatorSongArtistTv.text = currentItem.artist.name
         }
+
+        checkSongButtons()
     }
 
     private fun setupCuratorView() {
@@ -173,6 +171,8 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
 
         binding.curatorCategoryTitleTv.text = currentCategoryItem.name
         binding.curatorCategoryDescTv.text = currentCategoryItem.desc
+        binding.curatorCategoryLeftTv.text = currentCategoryItem.leftText
+        binding.curatorCategoryRightTv.text = currentCategoryItem.rightText
 
         currentSongItem?.let { currentItem ->
             val point: Int = when (currentCategoryPosition) {
@@ -185,10 +185,48 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
 
             binding.curatorCategorySlider.value = point.toFloat()
         }
+
+        checkCategoryButtons()
+    }
+
+    private fun checkSongButtons() {
+        when (currentSongPosition) {
+            0 -> {
+                binding.curatorSongPreviousFab.isEnabled = false
+                binding.curatorSongNextFab.isEnabled = true
+            }
+            (allSongList.size - 1) -> {
+                binding.curatorSongPreviousFab.isEnabled = true
+                binding.curatorSongNextFab.isEnabled = false
+            }
+            else -> {
+                binding.curatorSongPreviousFab.isEnabled = true
+                binding.curatorSongNextFab.isEnabled = true
+            }
+        }
+    }
+
+    private fun checkCategoryButtons() {
+        when (currentCategoryPosition) {
+            CATEGORY_ENERGY -> {
+                binding.curatorSongCatPreviousMb.isEnabled = false
+                binding.curatorSongCatNextMb.isEnabled = true
+            }
+            CATEGORY_ACOUSTIC -> {
+                binding.curatorSongCatPreviousMb.isEnabled = true
+                binding.curatorSongCatNextMb.isEnabled = false
+            }
+            else -> {
+                binding.curatorSongCatPreviousMb.isEnabled = true
+                binding.curatorSongCatNextMb.isEnabled = true
+            }
+        }
     }
 }
 
 data class CuratorCategory(
     val name: String,
-    val desc: String
+    val desc: String,
+    val leftText: String,
+    val rightText: String
 )

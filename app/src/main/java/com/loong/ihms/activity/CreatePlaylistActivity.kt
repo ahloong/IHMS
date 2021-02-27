@@ -10,6 +10,7 @@ import com.loong.ihms.databinding.ActivityCreatePlaylistBinding
 import com.loong.ihms.model.CuratorAlbum
 import com.loong.ihms.model.Song
 import com.loong.ihms.utils.ConstantDataUtil
+import com.loong.ihms.utils.GeneralUtil.createAlertDialog
 import com.loong.ihms.utils.UserRelatedUtil
 
 class CreatePlaylistActivity : BaseActivity() {
@@ -33,16 +34,20 @@ class CreatePlaylistActivity : BaseActivity() {
             val tempSongList = createChillSongList()
             val number = (curatorAlbumList.size + 1).toString()
 
-            val tempAlbum = CuratorAlbum(
-                number,
-                "Chill $number",
-                tempSongList,
-                "https://i.imgur.com/RSv02SE.jpeg"
-            )
+            if (tempSongList.size > 0) {
+                val tempAlbum = CuratorAlbum(
+                    number,
+                    "Chill $number",
+                    tempSongList,
+                    "https://i.imgur.com/RSv02SE.jpeg"
+                )
 
-            curatorAlbumList.add(tempAlbum)
-            UserRelatedUtil.saveCuratorAlbumList(curatorAlbumList)
-            exitAndUpdate()
+                curatorAlbumList.add(tempAlbum)
+                UserRelatedUtil.saveCuratorAlbumList(curatorAlbumList)
+                exitAndUpdate()
+            } else {
+                noSongAvailableAlert()
+            }
         }
 
         binding.createPlaylistUpliftingLl.setOnClickListener {
@@ -50,25 +55,65 @@ class CreatePlaylistActivity : BaseActivity() {
             val tempSongList = createUpliftingSongList()
             val number = (curatorAlbumList.size + 1).toString()
 
-            val tempAlbum = CuratorAlbum(
-                number,
-                "Uplifting $number",
-                tempSongList,
-                "https://i.imgur.com/irDsOqj.jpeg"
-            )
+            if (tempSongList.size > 0) {
+                val tempAlbum = CuratorAlbum(
+                    number,
+                    "Uplifting $number",
+                    tempSongList,
+                    "https://i.imgur.com/irDsOqj.jpeg"
+                )
 
-            curatorAlbumList.add(tempAlbum)
-            UserRelatedUtil.saveCuratorAlbumList(curatorAlbumList)
-            exitAndUpdate()
+                curatorAlbumList.add(tempAlbum)
+                UserRelatedUtil.saveCuratorAlbumList(curatorAlbumList)
+                exitAndUpdate()
+            } else {
+                noSongAvailableAlert()
+            }
         }
     }
 
     private fun createChillSongList(): ArrayList<Song> {
-        return curatorSongList
+        val tempList: ArrayList<Song> = ArrayList()
+
+        curatorSongList.forEach { song ->
+            if (curatorSongList.size > 15) {
+                return@forEach
+            }
+
+            if (song.energyPoint < 50
+                && song.danceabilityPoint < 50
+                && song.valancePoint > 50
+                && song.acousticPoint < 50
+            ) {
+                tempList.add(song)
+            }
+        }
+
+        return tempList
     }
 
     private fun createUpliftingSongList(): ArrayList<Song> {
-        return curatorSongList
+        val tempList: ArrayList<Song> = ArrayList()
+
+        curatorSongList.forEach { song ->
+            if (curatorSongList.size > 15) {
+                return@forEach
+            }
+
+            if (song.energyPoint > 50) {
+                tempList.add(song)
+            }
+        }
+
+        return tempList
+    }
+
+    private fun noSongAvailableAlert() {
+        createAlertDialog(
+            "No songs available",
+            "There is no song available to fit into this mood, please try again",
+            "OK"
+        )
     }
 
     private fun exitAndUpdate() {

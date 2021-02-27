@@ -49,6 +49,7 @@ data class Song(
         return when {
             mime.contains("flac", ignoreCase = true) -> "FLAC"
             mime.contains("mp3", ignoreCase = true) -> "MP3"
+            mime.contains("mpeg", ignoreCase = true) -> "MP3"
             else -> "MUSIC"
         }
     }

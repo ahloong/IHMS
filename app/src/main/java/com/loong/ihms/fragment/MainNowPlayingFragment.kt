@@ -94,6 +94,11 @@ class MainNowPlayingFragment : Fragment(R.layout.fragment_main_now_playing) {
     }
 
     fun startPlayingSong(songList: ArrayList<Song>, position: Int) {
+        binding.playSongTitleTv.text = ""
+        binding.playSongAlbumTv.text = ""
+        binding.playSongArtistTv.text = ""
+        binding.playSongStreamingTv.text = ""
+
         exoPlayer?.clearMediaItems()
         mainSongList = songList
 

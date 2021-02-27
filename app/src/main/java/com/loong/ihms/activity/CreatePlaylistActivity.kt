@@ -76,10 +76,6 @@ class CreatePlaylistActivity : BaseActivity() {
         val tempList: ArrayList<Song> = ArrayList()
 
         curatorSongList.forEach { song ->
-            if (curatorSongList.size > 15) {
-                return@forEach
-            }
-
             if (song.energyPoint < 50
                 && song.danceabilityPoint < 50
                 && song.valancePoint > 50
@@ -96,10 +92,6 @@ class CreatePlaylistActivity : BaseActivity() {
         val tempList: ArrayList<Song> = ArrayList()
 
         curatorSongList.forEach { song ->
-            if (curatorSongList.size > 15) {
-                return@forEach
-            }
-
             if (song.energyPoint > 50) {
                 tempList.add(song)
             }

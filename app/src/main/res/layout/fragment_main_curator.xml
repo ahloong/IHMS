@@ -27,7 +27,7 @@
                 android:layout_weight="4">
 
                 <ImageView
-                    android:id="@+id/curator_img"
+                    android:id="@+id/curator_song_img"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -47,7 +47,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/curator_title_tv"
+                    android:id="@+id/curator_song_title_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
@@ -55,7 +55,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/curator_album_tv"
+                    android:id="@+id/curator_song_album_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -63,7 +63,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/curator_artist_tv"
+                    android:id="@+id/curator_song_artist_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -86,6 +86,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/curator_song_previous_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/exo_icon_previous"
@@ -97,6 +98,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/curator_song_play_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/exo_icon_play"
@@ -108,6 +110,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/curator_song_next_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/exo_icon_next"

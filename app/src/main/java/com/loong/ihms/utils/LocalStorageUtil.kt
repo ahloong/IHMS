@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager
 object LocalStorageUtil {
     var MAIN_API_URL = "main_api_url"
     var USER_API_AUTH = "user_api_auth"
+    var USER_SONG_LIST = "user_song_list"
 
     var DEFAULT_STRING = ""
     var DEFAULT_INT = -1

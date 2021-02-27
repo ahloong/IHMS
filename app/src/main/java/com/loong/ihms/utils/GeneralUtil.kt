@@ -1,7 +1,12 @@
 package com.loong.ihms.utils
 
+import android.content.Context
 import android.content.res.Resources
+import android.graphics.Point
+import android.os.Build
+import android.util.DisplayMetrics
 import android.util.TypedValue
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -56,3 +61,52 @@ fun String.hashSha256(): String {
 fun Fragment.getBaseActivity(): BaseActivity {
     return requireActivity() as BaseActivity
 }
+
+// Screen width and height
+
+val Context.windowManager: WindowManager
+    get() = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+@Suppress("DEPRECATION")
+val Context.screenWidth: Int
+    get() {
+        var width = 0
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            display?.apply {
+                val size = Point()
+                this.getRealSize(size)
+
+                width = size.x
+            }
+        } else {
+            val displayMetrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+            width = displayMetrics.widthPixels
+        }
+
+        return width
+    }
+
+@Suppress("DEPRECATION")
+val Context.screenHeight: Int
+    get() {
+        var height = 0
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            display?.apply {
+                val size = Point()
+                this.getRealSize(size)
+
+                height = size.y
+            }
+        } else {
+            val displayMetrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+            height = displayMetrics.heightPixels
+        }
+
+        return height
+    }

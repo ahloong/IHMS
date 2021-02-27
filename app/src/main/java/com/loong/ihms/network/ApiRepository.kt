@@ -99,6 +99,33 @@ object ApiRepositoryFunction {
         })
     }
 
+    fun getAllSongs(
+        callback: ApiResponseCallback<ArrayList<Song>>
+    ) {
+        val call = ApiRepository.getApiService().getAllSongs(
+            UserRelatedUtil.getUserApiAuth(),
+            ConstantDataUtil.ACTION_SONGS
+        )
+
+        call.enqueue(object : Callback<ArrayList<Song>> {
+            override fun onResponse(call: Call<ArrayList<Song>>, response: Response<ArrayList<Song>>) {
+                if (response.code() == 200) {
+                    response.body()?.let {
+                        if (it.size > 0) {
+                            callback.onSuccess(it)
+                        }
+                    }
+                } else {
+                    callback.onFailed()
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Song>>, t: Throwable) {
+                callback.onFailed()
+            }
+        })
+    }
+
     fun getAlbumList(
         callback: ApiResponseCallback<ArrayList<Album>>
     ) {

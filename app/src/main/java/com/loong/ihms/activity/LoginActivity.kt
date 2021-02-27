@@ -30,6 +30,8 @@ class LoginActivity : BaseActivity() {
     }
 
     fun goToHome(view: View) {
+        showHideLoadingDialog(true)
+
         val username = binding.usernameField.text.toString()
         val password = binding.passwordField.text.toString()
 
@@ -39,18 +41,27 @@ class LoginActivity : BaseActivity() {
                 password,
                 object : ApiResponseCallback<UserProfile> {
                     override fun onSuccess(responseData: UserProfile) {
+                        showHideLoadingDialog(false)
                         UserRelatedUtil.saveUserApiAuth(responseData.auth)
 
-                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        getAllSongs(proceedCall = {
+                            proceedToHome()
+                        }, failedCall = {
+                            proceedToHome()
+                        })
                     }
 
                     override fun onFailed() {
-
+                        showHideLoadingDialog(false)
                     }
                 }
             )
         }
+    }
+
+    fun proceedToHome() {
+        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

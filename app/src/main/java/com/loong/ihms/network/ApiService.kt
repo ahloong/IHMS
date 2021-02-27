@@ -19,6 +19,13 @@ interface ApiService {
         @Query("user") user: String
     ): Call<UserProfile>
 
+    // Get all songs
+    @GET(".")
+    fun getAllSongs(
+        @Query("auth") auth: String,
+        @Query("action") action: String
+    ): Call<ArrayList<Song>>
+
     // Get a list of albums
     @GET(".")
     fun getAlbumList(

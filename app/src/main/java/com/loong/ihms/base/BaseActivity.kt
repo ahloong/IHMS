@@ -1,14 +1,13 @@
 package com.loong.ihms.base
 
 import android.graphics.Color
-import android.os.Handler
-import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.loong.ihms.R
 import com.loong.ihms.model.Song
 import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
+import com.loong.ihms.utils.ConstantDataUtil
 import com.loong.ihms.utils.LoadingDialog
 import com.loong.ihms.utils.UserRelatedUtil
 
@@ -43,9 +42,7 @@ open class BaseActivity : AppCompatActivity() {
             loadingDialog.dismiss()
             loadingDialog.show()
         } else {
-            Handler(Looper.getMainLooper()).postDelayed({
-                loadingDialog.dismiss()
-            }, 300)
+            loadingDialog.dismiss()
         }
     }
 
@@ -56,18 +53,15 @@ open class BaseActivity : AppCompatActivity() {
             override fun onSuccess(responseData: ArrayList<Song>) {
                 val curatorSongList = UserRelatedUtil.getCuratorSongList()
 
-                if (responseData.size > 0 && curatorSongList.size > 0) {
-                    responseData.forEach { oriSongItem ->
-                        val curatedSong = curatorSongList.find { it.id == oriSongItem.id }
+                responseData.forEach { oriSongItem ->
+                    val curatedSong = curatorSongList.find { it.id == oriSongItem.id }
+                    val defaultValue = ConstantDataUtil.DEFAULT_CATEGORY_VALUE
 
-                        curatedSong?.let {
-                            oriSongItem.energyPoint = it.energyPoint
-                            oriSongItem.danceabilityPoint = it.danceabilityPoint
-                            oriSongItem.valancePoint = it.valancePoint
-                            oriSongItem.acousticPoint = it.acousticPoint
-                            oriSongItem.isCurated = it.isCurated
-                        }
-                    }
+                    oriSongItem.energyPoint = curatedSong?.energyPoint ?: defaultValue
+                    oriSongItem.danceabilityPoint = curatedSong?.danceabilityPoint ?: defaultValue
+                    oriSongItem.valancePoint = curatedSong?.valancePoint ?: defaultValue
+                    oriSongItem.acousticPoint = curatedSong?.acousticPoint ?: defaultValue
+                    oriSongItem.isCurated = curatedSong?.isCurated ?: false
                 }
 
                 showHideLoadingDialog(false)

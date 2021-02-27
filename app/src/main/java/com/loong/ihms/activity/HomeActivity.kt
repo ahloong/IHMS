@@ -66,7 +66,7 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         binding.homeNavView.setNavigationItemSelectedListener(this)
         binding.homeToolbar.setNavigationOnClickListener { binding.drawerLayout.openDrawer(GravityCompat.START) }
 
-        setupViewPager()
+        setupFragments()
 
         LocalBroadcastManager
             .getInstance(this)
@@ -110,7 +110,7 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         return false
     }
 
-    private fun setupViewPager() {
+    private fun setupFragments() {
         val homeFragment = MainHomeFragment()
         val nowPlayingFragment = MainNowPlayingFragment()
         val curatorFragment = MainCuratorFragment()

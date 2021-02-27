@@ -29,6 +29,10 @@ class HomePlaylistFragment : Fragment(R.layout.fragment_home_playlist) {
             getDataList()
         }
 
+        binding.playlistCreateMb.setOnClickListener {
+            
+        }
+
         getDataList()
     }
 

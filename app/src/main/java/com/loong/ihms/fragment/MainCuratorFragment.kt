@@ -29,10 +29,10 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
 
     private val categoryList: ArrayList<CuratorCategory> by lazy {
         arrayListOf(
-            CuratorCategory("Energy", "This is Energy"),
-            CuratorCategory("Danceability", "This is Danceability"),
-            CuratorCategory("Valance", "This is Valance"),
-            CuratorCategory("Acoustic", "This is Acoustic")
+            CuratorCategory("Energy", "Do you feel energetic when listening to this song?"),
+            CuratorCategory("Danceability", "Do you feel you would like to dance to this song?"),
+            CuratorCategory("Valance", "Do you feel this song give you positive mood?"),
+            CuratorCategory("Acoustic", "How acoustic the music is?")
         )
     }
 
@@ -51,18 +51,19 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
             binding.curatorMainLl.visibility = View.VISIBLE
 
             if (curatorSongList.size > 0) {
-                val tempPosition = allSongList.indexOfFirst { it.id == curatorSongList[0].id }
+                val tempPosition = allSongList.indexOfFirst { it.id == curatorSongList.last().id }
                 currentSongPosition = if (tempPosition >= 0) (tempPosition + 1) else 0
             }
 
-            setupView()
+            setupMainView()
             setupSongView()
+            setupCuratorView()
         } else {
             binding.curatorMainLl.visibility = View.INVISIBLE
         }
     }
 
-    private fun setupView() {
+    private fun setupMainView() {
         // Song
 
         binding.curatorSongPreviousFab.setOnClickListener {
@@ -70,7 +71,10 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
                 currentSongPosition -= 1
             }
 
+            currentCategoryPosition = 0
+
             setupSongView()
+            setupCuratorView()
         }
 
         binding.curatorSongNextFab.setOnClickListener {
@@ -78,7 +82,10 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
                 currentSongPosition += 1
             }
 
+            currentCategoryPosition = 0
+
             setupSongView()
+            setupCuratorView()
         }
 
         binding.curatorSongPlayFab.setOnClickListener {
@@ -111,6 +118,8 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         }
 
         binding.curatorSongCatDoneMb.setOnClickListener {
+            currentSongItem?.isCurated = true
+
             currentSongItem?.let { currentSong ->
                 val curatedSongPosition = curatorSongList.indexOfFirst { curated ->
                     curated.id == currentSong.id
@@ -127,6 +136,8 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
 
                 UserRelatedUtil.saveCuratorSongList(curatorSongList)
             }
+
+            binding.curatorSongNextFab.callOnClick()
         }
 
         binding.curatorCategorySlider.addOnChangeListener { _, value, _ ->

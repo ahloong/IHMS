@@ -1,6 +1,7 @@
 package com.loong.ihms.utils
 
 import com.google.gson.Gson
+import com.loong.ihms.model.CuratorAlbum
 import com.loong.ihms.model.Song
 
 object UserRelatedUtil {
@@ -39,5 +40,39 @@ object UserRelatedUtil {
     fun saveAllSongList(songList: ArrayList<Song>) {
         val songListJsonStr = Gson().toJson(songList)
         LocalStorageUtil.writeString(LocalStorageUtil.USER_SONG_LIST, songListJsonStr)
+    }
+
+    // Local Curator Song List
+
+    fun getCuratorSongList(): ArrayList<Song> {
+        val curatorSongListJsonStr = LocalStorageUtil.readString(LocalStorageUtil.CURATOR_SONG_LIST)
+
+        return if (curatorSongListJsonStr.isNotEmpty()) {
+            Gson().fromJson(curatorSongListJsonStr)
+        } else {
+            ArrayList()
+        }
+    }
+
+    fun saveCuratorSongList(songList: ArrayList<Song>) {
+        val curatorSongListJsonStr = Gson().toJson(songList)
+        LocalStorageUtil.writeString(LocalStorageUtil.CURATOR_SONG_LIST, curatorSongListJsonStr)
+    }
+
+    // Local Curator Album List
+
+    fun getCuratorAlbumList(): ArrayList<CuratorAlbum> {
+        val curatorAlbumListJsonStr = LocalStorageUtil.readString(LocalStorageUtil.CURATOR_ALBUM_LIST)
+
+        return if (curatorAlbumListJsonStr.isNotEmpty()) {
+            Gson().fromJson(curatorAlbumListJsonStr)
+        } else {
+            ArrayList()
+        }
+    }
+
+    fun saveCuratorAlbumList(curatorAlbumList: ArrayList<CuratorAlbum>) {
+        val curatorAlbumListJsonStr = Gson().toJson(curatorAlbumList)
+        LocalStorageUtil.writeString(LocalStorageUtil.CURATOR_ALBUM_LIST, curatorAlbumListJsonStr)
     }
 }

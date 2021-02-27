@@ -1,5 +1,6 @@
 package com.loong.ihms.utils
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Point
@@ -29,6 +30,37 @@ object GeneralUtil {
         val sec: Int = seconds % 60
 
         return String.format("%02d:%02d", min, sec)
+    }
+
+    fun Context.createAlertDialog(
+        title: String = "",
+        message: String = "",
+        positiveText: String = "Okay",
+        positiveAction: () -> Unit = {},
+        negativeText: String = "",
+        negativeAction: () -> Unit = {}
+    ) {
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton(positiveText) { dialog, _ ->
+                positiveAction()
+                dialog.dismiss()
+            }
+
+        if (title.isNotEmpty()) {
+            dialogBuilder.setTitle(title)
+        }
+
+        if (negativeText.isNotEmpty()) {
+            dialogBuilder.setNegativeButton(negativeText) { dialog, _ ->
+                negativeAction()
+                dialog.dismiss()
+            }
+        }
+
+        val alert = dialogBuilder.create()
+        alert.show()
     }
 }
 

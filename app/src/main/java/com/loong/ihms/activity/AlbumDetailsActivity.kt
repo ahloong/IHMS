@@ -63,9 +63,16 @@ class AlbumDetailsActivity : BaseActivity() {
     // From backend
 
     private fun getAlbumData() {
+        showHideLoadingDialog(true)
+
         ApiRepositoryFunction.getAlbumDetails(albumId, object : ApiResponseCallback<Album> {
             override fun onSuccess(responseData: Album) {
                 albumItem = responseData
+                getAlbumSongList()
+            }
+
+            override fun onFailed() {
+                albumItem = null
                 getAlbumSongList()
             }
         })
@@ -74,8 +81,14 @@ class AlbumDetailsActivity : BaseActivity() {
     private fun getAlbumSongList() {
         ApiRepositoryFunction.getAlbumSongList(albumId, object : ApiResponseCallback<ArrayList<Song>> {
             override fun onSuccess(responseData: ArrayList<Song>) {
+                showHideLoadingDialog(false)
+
                 songList = responseData
                 setupView()
+            }
+
+            override fun onFailed() {
+                showHideLoadingDialog(false)
             }
         })
     }

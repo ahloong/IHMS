@@ -40,7 +40,7 @@
             android:elevation="10dp"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="Create Playlist"
+            android:text="Create"
             app:cornerRadius="40dp"
             app:icon="@drawable/ic_add" />
 

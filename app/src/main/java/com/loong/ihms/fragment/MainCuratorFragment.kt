@@ -15,11 +15,30 @@ import com.loong.ihms.utils.UserRelatedUtil
 import com.loong.ihms.utils.getBaseActivity
 
 class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
+    companion object {
+        const val CATEGORY_ENERGY = 0
+        const val CATEGORY_DANCEABILITY = 1
+        const val CATEGORY_VALANCE = 2
+        const val CATEGORY_ACOUSTIC = 3
+    }
+
     private lateinit var binding: FragmentMainCuratorBinding
 
     private var allSongList: ArrayList<Song> = ArrayList()
     private var curatorSongList: ArrayList<Song> = ArrayList()
+
+    private var currentSongItem: Song? = null
     private var currentPosition: Int = 0
+    private var currentCategoryPosition: Int = CATEGORY_ENERGY
+
+    private val categoryList: ArrayList<CuratorCategory> by lazy {
+        arrayListOf(
+            CuratorCategory("Energy", "This is Energy"),
+            CuratorCategory("Danceability", "This is Danceability"),
+            CuratorCategory("Valance", "This is Valance"),
+            CuratorCategory("Acoustic", "This is Acoustic")
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,23 +47,30 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         allSongList = UserRelatedUtil.getAllSongList()
         curatorSongList = UserRelatedUtil.getCuratorSongList()
 
-        allSongList = ArrayList(
-            allSongList.filter { item ->
-                curatorSongList.contains(item)
-            }
-        )
+        if (allSongList.size > 0) {
+            binding.curatorMainLl.visibility = View.VISIBLE
 
-        setupView()
-        setupCuratorView()
+            if (curatorSongList.size > 0) {
+                val tempPosition = allSongList.indexOfFirst { it.id == curatorSongList[0].id }
+                currentPosition = if (tempPosition >= 0) (tempPosition + 1) else 0
+            }
+
+            setupView()
+            setupSongView()
+        } else {
+            binding.curatorMainLl.visibility = View.INVISIBLE
+        }
     }
 
     private fun setupView() {
+        // Song
+
         binding.curatorSongPreviousFab.setOnClickListener {
             if (currentPosition > 0) {
                 currentPosition -= 1
             }
 
-            setupCuratorView()
+            setupSongView()
         }
 
         binding.curatorSongNextFab.setOnClickListener {
@@ -52,32 +78,95 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
                 currentPosition += 1
             }
 
-            setupCuratorView()
+            setupSongView()
         }
 
         binding.curatorSongPlayFab.setOnClickListener {
-            if (allSongList.size > 0) {
-                val currentItem = allSongList[currentPosition]
-                val songList = arrayListOf(currentItem)
-                val songListJsonStr = Gson().toJson(songList)
+            val currentItem = allSongList[currentPosition]
+            val songList = arrayListOf(currentItem)
+            val songListJsonStr = Gson().toJson(songList)
 
-                val localBroadcastIntent = Intent(ConstantDataUtil.START_PLAYING_INTENT)
-                localBroadcastIntent.putExtra(ConstantDataUtil.START_PLAYING_SONG_LIST_EXTRA, songListJsonStr)
-                localBroadcastIntent.putExtra(ConstantDataUtil.START_PLAYING_SONG_POSITION_EXTRA, 0)
-                LocalBroadcastManager.getInstance(getBaseActivity()).sendBroadcast(localBroadcastIntent)
+            val localBroadcastIntent = Intent(ConstantDataUtil.START_PLAYING_INTENT)
+            localBroadcastIntent.putExtra(ConstantDataUtil.START_PLAYING_SONG_LIST_EXTRA, songListJsonStr)
+            localBroadcastIntent.putExtra(ConstantDataUtil.START_PLAYING_SONG_POSITION_EXTRA, 0)
+            LocalBroadcastManager.getInstance(getBaseActivity()).sendBroadcast(localBroadcastIntent)
+        }
+
+        // Curator category
+
+        binding.curatorSongCatPreviousMb.setOnClickListener {
+            if (currentCategoryPosition > CATEGORY_ENERGY) {
+                currentCategoryPosition -= 1
+            }
+
+            setupCuratorView()
+        }
+
+        binding.curatorSongCatNextMb.setOnClickListener {
+            if (currentCategoryPosition < CATEGORY_ACOUSTIC) {
+                currentCategoryPosition += 1
+            }
+
+            setupCuratorView()
+        }
+
+        binding.curatorSongCatDoneMb.setOnClickListener {
+            currentSongItem?.let { currentSong ->
+                val curatedSong = curatorSongList.find { curated ->
+                    curated.id == currentSong.id
+                }
+            }
+        }
+
+        binding.curatorCategorySlider.addOnChangeListener { _, value, _ ->
+            currentSongItem?.let {
+                val tempValue = value.toInt()
+
+                when (currentCategoryPosition) {
+                    CATEGORY_ENERGY -> it.energyPoint = tempValue
+                    CATEGORY_DANCEABILITY -> it.danceabilityPoint = tempValue
+                    CATEGORY_VALANCE -> it.valancePoint = tempValue
+                    CATEGORY_ACOUSTIC -> it.acousticPoint = tempValue
+                }
             }
         }
     }
 
+    private fun setupSongView() {
+        currentSongItem = allSongList[currentPosition]
+
+        currentSongItem?.let { currentItem ->
+            Glide.with(getBaseActivity())
+                .load(currentItem.art)
+                .into(binding.curatorSongImg)
+
+            binding.curatorSongTitleTv.text = currentItem.name
+            binding.curatorSongAlbumTv.text = currentItem.album.name
+            binding.curatorSongArtistTv.text = currentItem.artist.name
+        }
+    }
+
     private fun setupCuratorView() {
-        val currentItem = allSongList[currentPosition]
+        val currentCategoryItem = categoryList[currentCategoryPosition]
 
-        Glide.with(getBaseActivity())
-            .load(currentItem.art)
-            .into(binding.curatorSongImg)
+        binding.curatorCategoryTitleTv.text = currentCategoryItem.name
+        binding.curatorCategoryDescTv.text = currentCategoryItem.desc
 
-        binding.curatorSongTitleTv.text = currentItem.name
-        binding.curatorSongAlbumTv.text = currentItem.album.name
-        binding.curatorSongArtistTv.text = currentItem.artist.name
+        currentSongItem?.let { currentItem ->
+            val point: Int = when (currentCategoryPosition) {
+                CATEGORY_ENERGY -> currentItem.energyPoint
+                CATEGORY_DANCEABILITY -> currentItem.danceabilityPoint
+                CATEGORY_VALANCE -> currentItem.valancePoint
+                CATEGORY_ACOUSTIC -> currentItem.acousticPoint
+                else -> ConstantDataUtil.DEFAULT_CATEGORY_VALUE
+            }
+
+            binding.curatorCategorySlider.value = point.toFloat()
+        }
     }
 }
+
+data class CuratorCategory(
+    val name: String,
+    val desc: String
+)

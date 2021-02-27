@@ -1,6 +1,9 @@
 package com.loong.ihms.utils
 
 object ConstantDataUtil {
+    // Curator Category
+    const val DEFAULT_CATEGORY_VALUE = 50
+
     // API Version
     const val API_VERSION = "350001"
 

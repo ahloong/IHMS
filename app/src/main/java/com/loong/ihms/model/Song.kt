@@ -2,6 +2,7 @@ package com.loong.ihms.model
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.loong.ihms.utils.ConstantDataUtil
 
 @Keep
 data class Song(
@@ -44,6 +45,11 @@ data class Song(
     @SerializedName("replaygain_track_gain") val replayGainTrackGain: String,
     @SerializedName("replaygain_track_peak") val replayGainTrackPeak: String,
     @SerializedName("genre") val genre: List<Any>,
+    @SerializedName("energy_point") var energyPoint: Int = ConstantDataUtil.DEFAULT_CATEGORY_VALUE,
+    @SerializedName("danceability_point") var danceabilityPoint: Int = ConstantDataUtil.DEFAULT_CATEGORY_VALUE,
+    @SerializedName("valance_point") var valancePoint: Int = ConstantDataUtil.DEFAULT_CATEGORY_VALUE,
+    @SerializedName("acoustic_point") var acousticPoint: Int = ConstantDataUtil.DEFAULT_CATEGORY_VALUE,
+    @SerializedName("is_curated") var isCurated: Boolean = false
 ) {
     fun getMediaType(): String {
         return when {

@@ -54,6 +54,22 @@ open class BaseActivity : AppCompatActivity() {
 
         ApiRepositoryFunction.getAllSongs(object : ApiResponseCallback<ArrayList<Song>> {
             override fun onSuccess(responseData: ArrayList<Song>) {
+                val curatorSongList = UserRelatedUtil.getCuratorSongList()
+
+                if (responseData.size > 0 && curatorSongList.size > 0) {
+                    responseData.forEach { oriSongItem ->
+                        val curatedSong = curatorSongList.find { it.id == oriSongItem.id }
+
+                        curatedSong?.let {
+                            oriSongItem.energyPoint = it.energyPoint
+                            oriSongItem.danceabilityPoint = it.danceabilityPoint
+                            oriSongItem.valancePoint = it.valancePoint
+                            oriSongItem.acousticPoint = it.acousticPoint
+                            oriSongItem.isCurated = it.isCurated
+                        }
+                    }
+                }
+
                 showHideLoadingDialog(false)
                 UserRelatedUtil.saveAllSongList(responseData)
                 proceedCall()

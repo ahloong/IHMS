@@ -14,20 +14,19 @@ import com.loong.ihms.base.BaseActivity
 import com.loong.ihms.databinding.ActivityAlbumDetailsBinding
 import com.loong.ihms.databinding.ViewTrackItemBinding
 import com.loong.ihms.model.Album
+import com.loong.ihms.model.CuratorAlbum
 import com.loong.ihms.model.Song
 import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
-import com.loong.ihms.utils.ConstantDataUtil
-import com.loong.ihms.utils.GeneralUtil
-import com.loong.ihms.utils.SpaceItemDecoration
-import com.loong.ihms.utils.dp
+import com.loong.ihms.utils.*
 
 class AlbumDetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityAlbumDetailsBinding
 
     private lateinit var adapter: SongListAdapter
-    private var albumId: Int = 0 // 0 = local playlist | > 0 = online album
+    private var albumId: Int = 0
     private var albumItem: Album? = null
+    private var albumPlaylistItem: CuratorAlbum? = null
     private var songList: ArrayList<Song> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +40,27 @@ class AlbumDetailsActivity : BaseActivity() {
         binding.albumDetailsRv.addItemDecoration(SpaceItemDecoration(8.dp))
 
         if (albumId == 0) {
-
+            albumId = intent.getIntExtra(ConstantDataUtil.ALBUM_PLAYLIST_DETAILS_ID_PARAMS, 0)
+            getAlbumPlaylistData()
         } else {
             getAlbumData()
         }
     }
+
+    // From local
+
+    private fun getAlbumPlaylistData() {
+        val curatorAlbum = UserRelatedUtil.getCuratorAlbumList()
+        albumPlaylistItem = curatorAlbum.find { it.id == albumId.toString() }
+
+        albumPlaylistItem?.let {
+            songList = it.songList
+        }
+
+        setupView()
+    }
+
+    // From backend
 
     private fun getAlbumData() {
         ApiRepositoryFunction.getAlbumDetails(albumId, object : ApiResponseCallback<Album> {
@@ -65,12 +80,22 @@ class AlbumDetailsActivity : BaseActivity() {
         })
     }
 
-    private fun setupView() {
-        binding.albumDetailsToolbar.title = albumItem?.name ?: ""
+    // Others
 
-        Glide.with(this)
-            .load(albumItem?.art ?: "")
-            .into(binding.albumDetailsArtImg)
+    private fun setupView() {
+        if (albumItem != null) {
+            binding.albumDetailsToolbar.title = albumItem?.name ?: ""
+
+            Glide.with(this)
+                .load(albumItem?.art ?: "")
+                .into(binding.albumDetailsArtImg)
+        } else if (albumPlaylistItem != null) {
+            binding.albumDetailsToolbar.title = albumPlaylistItem?.name ?: ""
+
+            Glide.with(this)
+                .load(albumPlaylistItem?.art ?: "")
+                .into(binding.albumDetailsArtImg)
+        }
 
         adapter = SongListAdapter(this, songList)
         binding.albumDetailsRv.adapter = adapter

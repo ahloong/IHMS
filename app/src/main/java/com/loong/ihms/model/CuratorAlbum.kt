@@ -9,4 +9,23 @@ data class CuratorAlbum(
     @SerializedName("name") val name: String,
     @SerializedName("songlist") val songList: ArrayList<Song>,
     @SerializedName("art") val art: String
-)
+) {
+    fun getArtistNames(): String {
+        var names = ""
+
+        songList.forEachIndexed { index, item ->
+            if (index > 3) {
+                names = "${names}, ..."
+                return@forEachIndexed
+            } else {
+                names = if (names.isEmpty()) {
+                    item.artist.name
+                } else {
+                    "${names}, ${item.artist.name}"
+                }
+            }
+        }
+
+        return names
+    }
+}

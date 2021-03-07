@@ -11,6 +11,7 @@ import com.loong.ihms.model.UserProfile
 import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
 import com.loong.ihms.utils.ConstantDataUtil
+import com.loong.ihms.utils.GeneralUtil.createAlertDialog
 import com.loong.ihms.utils.UserRelatedUtil
 
 class LoginActivity : BaseActivity() {
@@ -53,6 +54,11 @@ class LoginActivity : BaseActivity() {
 
                     override fun onFailed() {
                         showHideLoadingDialog(false)
+
+                        createAlertDialog(
+                            "Opps!",
+                            "Login failed, please try again."
+                        )
                     }
                 }
             )

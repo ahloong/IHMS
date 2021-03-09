@@ -53,9 +53,10 @@ data class Song(
 ) {
     fun getMediaType(): String {
         return when {
-            mime.contains("flac", ignoreCase = true) -> "FLAC"
-            mime.contains("mp3", ignoreCase = true) -> "MP3"
-            mime.contains("mpeg", ignoreCase = true) -> "MP3"
+            filename.contains("flac", ignoreCase = true) -> "FLAC"
+            filename.contains("mp3", ignoreCase = true) -> "MP3"
+            filename.contains("mpeg", ignoreCase = true) -> "MP3"
+            filename.contains("wav", ignoreCase = true) -> "WAV"
             else -> "MUSIC"
         }
     }

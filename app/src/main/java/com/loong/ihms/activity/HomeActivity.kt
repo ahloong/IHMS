@@ -37,13 +37,13 @@ class HomeActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private val fragmentManager: FragmentManager = supportFragmentManager
     private var currentFragment: Fragment? = null
 
-    private val broadcastReceiver = object : BroadcastReceiver() {
+    private val broadcastReceiver = object : BroadcastReceiver() {               //to receive data from broadcast manager
         override fun onReceive(context: Context?, intent: Intent?) {
             Handler(Looper.getMainLooper()).postDelayed({
                 val songListJsonStr = intent?.getStringExtra(ConstantDataUtil.START_PLAYING_SONG_LIST_EXTRA) ?: ""
                 val songPosition = intent?.getIntExtra(ConstantDataUtil.START_PLAYING_SONG_POSITION_EXTRA, 0) ?: 0
 
-                if (songListJsonStr.isNotEmpty()) {
+                if (songListJsonStr.isNotEmpty()) {                             //receive songlist and track position and send to now playing fragment
                     binding.homeBottomNavView.selectedItemId = ID_FRAGMENT_NOW_PLAYING
                     showFragment(ID_FRAGMENT_NOW_PLAYING.toString())
 

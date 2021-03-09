@@ -11,7 +11,7 @@ import com.loong.ihms.utils.ConstantDataUtil
 import com.loong.ihms.utils.LoadingDialog
 import com.loong.ihms.utils.UserRelatedUtil
 
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {         //abstract class, to use these methods in other class
     fun setupToolbar(toolbar: Toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.title = ""

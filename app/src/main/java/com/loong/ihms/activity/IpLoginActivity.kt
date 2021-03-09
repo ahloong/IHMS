@@ -17,13 +17,13 @@ class IpLoginActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ip_login)
 
         // For testing, can change to newest url
-        binding.ipPortEditText.setText("http://2a5d51d2f706.ngrok.io")
+        binding.ipPortEditText.setText("192.168.1.110")
     }
 
     fun goToLogin(view: View) {
         var ipStr = binding.ipPortEditText.text.toString()
 
-        if (ipStr.isNotEmpty()) {
+        if (ipStr.isNotEmpty()) { //automatically add "http://" if user didnt enter
             if (!ipStr.contains("http")) {
                 ipStr = "http://${ipStr}"
             }

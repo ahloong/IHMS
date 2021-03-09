@@ -20,13 +20,13 @@ import com.loong.ihms.network.ApiRepositoryFunction
 import com.loong.ihms.network.ApiResponseCallback
 import com.loong.ihms.utils.*
 
-class AlbumDetailsActivity : BaseActivity() {
+class AlbumDetailsActivity : BaseActivity() {                 //used to show album details and playlist detail
     private lateinit var binding: ActivityAlbumDetailsBinding
 
     private lateinit var adapter: SongListAdapter
     private var albumId: Int = 0
-    private var albumItem: Album? = null
-    private var albumPlaylistItem: CuratorAlbum? = null
+    private var albumItem: Album? = null                    //remote server album detail
+    private var albumPlaylistItem: CuratorAlbum? = null     //local storage album detail (record data, not real object)
     private var songList: ArrayList<Song> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class AlbumDetailsActivity : BaseActivity() {
 
     // From local
 
-    private fun getAlbumPlaylistData() {
+    private fun getAlbumPlaylistData() {     //get playlist detail
         val curatorAlbum = UserRelatedUtil.getCuratorAlbumList()
         albumPlaylistItem = curatorAlbum.find { it.id == albumId.toString() }
 

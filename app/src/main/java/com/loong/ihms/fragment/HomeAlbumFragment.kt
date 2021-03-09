@@ -33,7 +33,7 @@ class HomeAlbumFragment : Fragment(R.layout.fragment_home_album) {
         getDataList()
     }
 
-    private fun getDataList() {
+    private fun getDataList() {                   //get album list from remote server's json
         binding.albumContentSrl.isRefreshing = true
 
         ApiRepositoryFunction.getAlbumList(object : ApiResponseCallback<ArrayList<Album>> {
@@ -51,7 +51,7 @@ class HomeAlbumFragment : Fragment(R.layout.fragment_home_album) {
         })
     }
 
-    private fun setupList() {
+    private fun setupList() {        //for recycler view
         adapter = AlbumListAdapter(getBaseActivity(), dataItemList)
         binding.albumContentRv.adapter = adapter
     }

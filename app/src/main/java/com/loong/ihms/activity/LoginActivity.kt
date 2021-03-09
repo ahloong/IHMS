@@ -47,7 +47,7 @@ class LoginActivity : BaseActivity() {
 
                         getAllSongs(proceedCall = {
                             proceedToHome()
-                        }, failedCall = {
+                        }, failedCall = {      //if song list is empty, it will redirect to home page without any song (to prevent crashing)
                             proceedToHome()
                         })
                     }

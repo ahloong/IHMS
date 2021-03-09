@@ -10,7 +10,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import timber.log.Timber
 import java.io.IOException
 
-class LogJsonInterceptor : Interceptor {
+class LogJsonInterceptor : Interceptor {           //for logcat
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

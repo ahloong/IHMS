@@ -18,7 +18,7 @@ class MainHomeFragment : Fragment(R.layout.fragment_main_home) {
         setupViewPager()
     }
 
-    private fun setupViewPager() {
+    private fun setupViewPager() {              //tab view in main interface
         val fragmentList = ArrayList<Fragment>()
         val fragmentTitleList = ArrayList<String>()
 

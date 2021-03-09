@@ -8,7 +8,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiService {
+interface ApiService {                    //get what data that should be send to tapau link
     // Login using username and password
     @GET(".")
     fun getUserLogin(

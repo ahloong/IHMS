@@ -116,7 +116,7 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         binding.curatorSongCatDoneMb.setOnClickListener {
             currentSongItem?.isCurated = true
 
-            currentSongItem?.let { currentSong ->
+            currentSongItem?.let { currentSong ->                                   //check whether song has been curated before
                 val curatedSongPosition = curatorSongList.indexOfFirst { curated ->
                     curated.id == currentSong.id
                 }
@@ -150,7 +150,7 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         }
     }
 
-    private fun setupSongView() {
+    private fun setupSongView() {                                 //get track data to be curated
         currentSongItem = allSongList[currentSongPosition]
 
         currentSongItem?.let { currentItem ->
@@ -189,7 +189,7 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         checkCategoryButtons()
     }
 
-    private fun checkSongButtons() {
+    private fun checkSongButtons() {             //check whether to be curated song list is at the top or bottom
         when (currentSongPosition) {
             0 -> {
                 binding.curatorSongPreviousFab.isEnabled = false
@@ -206,7 +206,7 @@ class MainCuratorFragment : Fragment(R.layout.fragment_main_curator) {
         }
     }
 
-    private fun checkCategoryButtons() {
+    private fun checkCategoryButtons() {              //check whether the category list is at the top or bottom
         when (currentCategoryPosition) {
             CATEGORY_ENERGY -> {
                 binding.curatorSongCatPreviousMb.isEnabled = false

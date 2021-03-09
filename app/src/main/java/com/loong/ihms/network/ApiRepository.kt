@@ -99,7 +99,7 @@ object ApiRepositoryFunction {
         })
     }
 
-    fun getAllSongs(
+    fun getAllSongs(                            //get all song data from remote server
         callback: ApiResponseCallback<ArrayList<Song>>
     ) {
         val call = ApiRepository.getApiService().getAllSongs(
